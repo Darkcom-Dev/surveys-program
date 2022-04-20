@@ -8,9 +8,9 @@ My intension is create a combination of this surveys and give a grade if deserve
 Know Issues
 ---
 
--[] Get info from entries generated from loop in home window.
--[] Get formated date in persons_ui
--[] Get formated direction in dwelling basic
--[] Enhance ttk_utils to simplify code
--[] Evaluate if use interface for "Next ▶" button
--[] Create "Pause" button
+- [] Get info from entries generated from loop in home window.
+- [] Get formated date in persons_ui
+- [] Get formated direction in dwelling basic
+- [] Enhance ttk_utils to simplify code
+- [] Evaluate if use interface for "Next ▶" button
+- [] Create "Pause" button
