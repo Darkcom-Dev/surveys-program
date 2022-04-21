@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
+from tkcalendar import DateEntry
+import ttk_utils as ttku
 
 class Date(tk.Toplevel):
 	""" Class doc """
@@ -33,8 +35,11 @@ class Persons(tk.Frame):
 		self.unknow_birth_check.grid(row = 2, column = 0, sticky = 'WE', padx = 5)
 		self.unknow_birth_check.after(1000,self.update)
 		
-		self.born_button = ttk.Button(self.person_frame, text = 'Configurar fecha', command = self.configure_born)
-		self.born_button.grid(row = 2, column = 1, sticky = 'WE', padx = 10, pady = 5)
+		
+		self.born_date = DateEntry(self.person_frame, selectmode ='day', year = 1950, month = 1, day = 1)
+		self.born_date.grid(row = 2, column = 1, sticky = 'WE', padx = 10, pady = 5)
+		
+		
 		
 		ttk.Label(self.person_frame, text = 'Tipo de documento').grid(row = 3, column = 0, sticky = 'WE', padx = 5, pady = 5)
 		ttk.Label(self.person_frame, text = 'Número de documento').grid(row = 3, column = 1, sticky = 'WE', padx = 5, pady = 5)
@@ -155,9 +160,9 @@ class Persons(tk.Frame):
 	def update (self):
 		""" Function doc """
 		if self.unknow_birth.get() == 1:
-			self.born_button.state(['!disabled'])
+			self.born_date.state(['!disabled'])
 		else:
-			self.born_button.state(['disabled'])
+			self.born_date.state(['disabled'])
 		self.unknow_birth_check.after(1000,self.update)
 
 class Sons(tk.Toplevel):

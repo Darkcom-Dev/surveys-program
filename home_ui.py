@@ -143,7 +143,7 @@ Personas: {self.deceased_amount_spin.get()}
 		
 	def deceased (self):
 		""" Function that invoke Deceased window class """
-		fallen_window = Deceased_window(self.deceased_amount.get())
+		fallen_window = Deceased_window(int(self.deceased_amount_spin.get()))
 
 	def home (self):
 		''' Function that invoke Home window class '''
@@ -193,8 +193,9 @@ class Deceased_window(tk.Toplevel):
 			
 			ttk.Separator(self.fallen_labelf).grid(row = 4 + allrow, column = 0, columnspan = 2, sticky = 'WE', padx = 5, pady = 5)
 			
-			deseased_data = {'genero' : gender.get(), 'edad' : age_spin.get(), 'certificado' : death_certificate_combo.get()}
+			deseased_data = {'genero' : gender, 'edad' : age_spin, 'certificado' : death_certificate_combo}
 			self.deseaseds.append(deseased_data)
+			
 		close_button = ttk.Button(self.fallen_labelf, text = 'Cerrar', command = self.validate_info).grid(row = 5 * (self.deceased), column = 0, columnspan = 2, sticky = 'WE', padx = 10, pady = 5)
 		
 		self.focus()
@@ -205,12 +206,24 @@ class Deceased_window(tk.Toplevel):
 	def validate_info (self):
 		""" Function doc """
 		
+		deseaseds_list = list()
+		complete = True
+		
 		for deseased in self.deseaseds:
-			msg = f'genero: {deseased["genero"]}, Edad: {deseased["edad"]}, Certificado: {deseased["certificado"]}'
-			print(msg)
-		message = f'''
-Genero: Mensaje
-'''
+			if deseased['edad'].get() == '0':
+				complete = False
+				messagebox.showinfo(message = 'Revise la edad', title = 'Error')
+			elif deseased['certificado'].get() == '':
+				coplete = False
+				messagebox.showinfo(message = 'Escoja una opcion valida de certificado', title = 'Error')
+			else:
+				deseased_data = {'genero': deseased['genero'].get(), 'edad': deseased['edad'].get(), 'certificado': deseased['certificado'].get()}
+				deseaseds_list.append(deseased_data)
+			
+		if complete:
+			print(*deseaseds_list)
+			save_ui.deseased_list = deseaseds_list
+			self.destroy()
 		
 class Home_window(tk.Toplevel):
 	""" Class for secondary float window, this window get complete names of the home members """
@@ -240,6 +253,7 @@ personas secuestradas, personas en vacaciones fuera del hogar, etc)'''
 		
 		ttk.Label(self.persons_frame, text = f'{home_sentence}\n{home_out_sentence}\n{living_out_sentence}').pack(fill = tk.X, padx = 5, pady = 5)
 		
+		self.persons_list = list()
 		
 		for p in range(self.total_hogar):
 			
@@ -266,8 +280,10 @@ personas secuestradas, personas en vacaciones fuera del hogar, etc)'''
 			second_surname_entry.configure(font = self.font)
 			second_surname_entry.grid(row = 1, column = 3, sticky = 'WE', padx = 5)
 			
+			person = {'f_name' : first_name_entry, 's_name' : second_name_entry, 'f_surname' : first_surname_entry, 's_surname' : second_surname_entry}
+			self.persons_list.append(person)
 
-		close_button = ttk.Button(self.persons_frame, text = 'Cerrar', command = self.destroy).pack(fill = tk.X, padx = 5, pady = 5)
+		close_button = ttk.Button(self.persons_frame, text = 'Cerrar', command = self.recoger_datos).pack(fill = tk.X, padx = 5, pady = 5)
 		self.focus()
 		self.grab_set()
 		self.protocol('WM_DELETE_WINDOW', disable_event)
@@ -278,7 +294,31 @@ personas secuestradas, personas en vacaciones fuera del hogar, etc)'''
 		# ~ TODO: Crear una funcion que recoge los datos y los envia a la ventana principal apenas cierre esta ventana
 		# ~ Eliminar la posibilidad de cerrar esta ventana si los datos no estan completos
 		
-		pass
+		persons_formated_list = list()
+		
+		complete = True
+		
+		for person in self.persons_list:
+			
+			if person['f_name'].get() == '':
+				complete = False
+				messagebox.showinfo(message = 'Falta el primer nombre', title = 'Error')
+			elif person['f_surname'].get() == '':
+				complete = False
+				messagebox.showinfo(message = 'Falta el primer apellido', title = 'Error')
+			else:
+				person = {	'first name' : person['f_name'].get(),
+							'second name': person['s_name'].get(),
+							'first surname': person['f_surname'].get(),
+							'second surname':person['s_surname'].get()}
+				persons_formated_list.append(person)
+				
+				
+		
+		if complete:
+			save_ui.person_list = persons_formated_list
+			print(*save_ui.person_list)
+			self.destroy()
 
 class Application(tk.Tk):
 	""" Class doc """

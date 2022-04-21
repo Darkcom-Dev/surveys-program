@@ -157,7 +157,7 @@ if __name__ == '__main__':
 	characteristics = None
 	services = None
 	dwelling_basic = None
-	
-
+	person_list = None
+	deseased_list = None
 	
 	sys.exit(main(sys.argv))

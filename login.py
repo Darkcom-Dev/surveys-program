@@ -24,8 +24,14 @@ class Login(ttk.Frame):
 		
 		self.user = ttku.LabeledEntry(self,'_Usuario: ')
 		self.user.pack(fill = tk.X)
-		self.password = ttku.LabeledEntry(self,'Password: ')
+		# ~ options = {'show':'*'}
+		
+		self.password = ttku.LabeledEntry(self,'Password: ', show = '*')
 		self.password.pack(fill = tk.X)
+		
+		options = ['Option 1', 'Option 2', 'Option 3', 'Option 4']
+		self.combo_ex = ttku.LabeledCombobox(self, 'Opciones: ', values = options)
+		self.combo_ex.pack(fill = tk.X)
 		
 		ttk.Button(self, text = 'Siguiente', command = lambda: self.authenticate_password(parent)).pack(fill = tk.X)
 		
