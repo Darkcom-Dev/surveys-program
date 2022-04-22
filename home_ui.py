@@ -78,7 +78,7 @@ class Home(ttk.Frame):
 		self.persons_frame.pack(fill = tk.X, padx = 5, pady = 5)
 		
 		# ~ 26. Cantidad personas
-		ttk.Label(self.persons_frame, text = '¿Cuantas personas que eran miembros de esre home fallecieron en año pasado?').grid(row = 8, column = 0, columnspan = 2, sticky = 'WE', padx = 5, pady = 5)
+		ttk.Label(self.persons_frame, text = '¿Cuantas personas que eran miembros de este hogar fallecieron en año pasado?').grid(row = 8, column = 0, columnspan = 2, sticky = 'WE', padx = 5, pady = 5)
 		
 		
 		self.deceased_amount_spin = tk.Spinbox(self.persons_frame, from_ = 0, to = 5)

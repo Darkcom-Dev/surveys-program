@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 from tkcalendar import DateEntry
 import ttk_utils as ttku
 
@@ -24,7 +25,8 @@ class Persons(tk.Frame):
 		self.person_frame = ttk.Labelframe(self, text = f'{self.name} {self.surname}')
 		self.person_frame.pack(padx = 5, pady = 5, fill = tk.X)
 		
-		self.gender_check = ttk.Checkbutton(self.person_frame, text = '¿Es mujer?')
+		self.gender = tk.IntVar()
+		self.gender_check = ttk.Checkbutton(self.person_frame, text = '¿Es mujer?', variable = self.gender)
 		self.gender_check.grid(row = 0, column = 0, padx = 10, pady = 5, sticky = 'WE')
 		
 		ttk.Label(self.person_frame, text = '¿Cual es la fecha de nacimiento?').grid(row = 1, column = 0, sticky = 'WE')
@@ -36,7 +38,7 @@ class Persons(tk.Frame):
 		self.unknow_birth_check.after(1000,self.update)
 		
 		
-		self.born_date = DateEntry(self.person_frame, selectmode ='day', year = 1950, month = 1, day = 1)
+		self.born_date = DateEntry(self.person_frame, selectmode ='day', year = 2000, month = 1, day = 1)
 		self.born_date.grid(row = 2, column = 1, sticky = 'WE', padx = 10, pady = 5)
 		
 		
@@ -84,39 +86,39 @@ class Persons(tk.Frame):
 		self.movement_frame.pack(padx = 5, pady = 5, fill = tk.X)
 		## ~ ¿Donde nació?
 		
-		ttk.Label(self.movement_frame, text = '¿Donde nació?').grid(row = 0, column = 0, sticky = 'WE', padx = 5)
+		ttk.Label(self.movement_frame, text = '¿Donde nació?').grid(row = 2, column = 0, sticky = 'WE', padx = 5)
 		
 		self.site_born = tk.StringVar()
 		self.site_born_combo = ttk.Combobox(self.movement_frame, textvariable = self.site_born, state = 'readonly')
-		self.site_born_combo.grid(row = 1, column = 0, sticky = 'WE', padx = 10, pady = 5)
+		self.site_born_combo.grid(row = 2, column = 1, sticky = 'WE', padx = 10, pady = 5)
 		self.site_born_combo['values'] = ['En este municipio','En otro municipio colombiano','En otro pais']
 		
-		self.site_born_button = ttk.Button(self.movement_frame, text = 'Configurar Site', command = self.configure_born_site)
-		self.site_born_button.grid(row = 1, column = 1, sticky = 'WE', padx = 10, pady = 5)
+		self.site_born_button = ttk.Button(self.movement_frame, text = 'Configurar Sitio', command = self.configure_born_site)
+		self.site_born_button.grid(row = 2, column = 2, sticky = 'WE', padx = 10, pady = 5)
 
 		## ~ ¿Donde estaba hace 5 años?
 		
-		ttk.Label(self.movement_frame, text = '¿Donde vivía hace 5 años?').grid(row = 2, column = 0, sticky = 'WE', padx = 5)
+		ttk.Label(self.movement_frame, text = '¿Donde vivía hace 5 años?').grid(row = 3, column = 0, sticky = 'WE', padx = 5)
 		
 		self._5_years_back = tk.StringVar()
 		self._5_years_back_combo = ttk.Combobox(self.movement_frame, textvariable = self._5_years_back, state = 'readonly')
-		self._5_years_back_combo.grid(row = 3, column = 0, sticky = 'WE', padx = 10)
+		self._5_years_back_combo.grid(row = 3, column = 1, sticky = 'WE', padx = 10)
 		self._5_years_back_combo['values'] = ['En este municipio','En otro municipio colombiano','En otro pais','No había nacido']
 		
-		self._5_years_back_button = ttk.Button(self.movement_frame, text = 'Configurar Site', command = self.configure_5_months_back)
-		self._5_years_back_button.grid(row = 3, column = 1, sticky = 'WE', padx = 10, pady = 5)
+		self._5_years_back_button = ttk.Button(self.movement_frame, text = 'Configurar Sitio', command = self.configure_5_months_back)
+		self._5_years_back_button.grid(row = 3, column = 2, sticky = 'WE', padx = 10, pady = 5)
 
 		## ~ ¿Donde estaba hace 12 meses?
 		
-		ttk.Label(self.movement_frame, text = '¿Donde vivia hace 12 meses').grid(row = 4, column = 0, sticky = 'WE', padx = 5)
+		ttk.Label(self.movement_frame, text = '¿Donde vivia hace 12 meses?').grid(row = 4, column = 0, sticky = 'WE', padx = 5)
 		
 		self._12_months_back = tk.StringVar()
 		self._12_months_back_combo = ttk.Combobox(self.movement_frame, textvariable = self._12_months_back, state = 'readonly')
-		self._12_months_back_combo.grid(row = 5, column = 0, sticky = 'WE', padx = 10)
+		self._12_months_back_combo.grid(row = 4, column = 1, sticky = 'WE', padx = 10)
 		self._12_months_back_combo['values'] = ['En este municipio','En otro municipio colombiano','En otro pais','No había nacido']
 		
-		self._12_months_back_button = ttk.Button(self.movement_frame, text = 'Configurar Site', command = self.configure_12_months_back)
-		self._12_months_back_button.grid(row = 5, column = 1, sticky = 'WE', padx = 10, pady = 5)
+		self._12_months_back_button = ttk.Button(self.movement_frame, text = 'Configurar Sitio', command = self.configure_12_months_back)
+		self._12_months_back_button.grid(row = 4, column = 2, sticky = 'WE', padx = 10, pady = 5)
 		
 		# Frame --------------------------------------------- greater 10
 		self.greater10_frame = ttk.LabelFrame(self, text = 'Estado civil para mayores de 10 años.')
@@ -134,8 +136,11 @@ class Persons(tk.Frame):
 		self.women_frame = ttk.Labelframe(self, text = 'Para mujeres mayores de 10 años.')
 		self.women_frame.pack(padx = 5, pady = 5, fill = tk.X)
 		
-		self.sons_button = ttk.Button(self.women_frame,text = 'Sons', command = self.sons)
+		self.sons_button = ttk.Button(self.women_frame,text = 'Hijos', command = self.sons)
 		self.sons_button.pack()
+		
+		self.next_button = ttk.Button(self, text = 'Siguiente ▶', command = lambda : self.message_data(parent))
+		self.next_button.pack(fill = tk.X)
 		
 	def sons (self):
 		""" Function doc """
@@ -163,7 +168,52 @@ class Persons(tk.Frame):
 			self.born_date.state(['!disabled'])
 		else:
 			self.born_date.state(['disabled'])
+		#------------------------------------------------------------
+		if self.gender.get() == 0:
+			self.women_frame.state(['disabled'])
+			self.sons_button.state(['disabled'])
+		else:
+			self.women_frame.state(['!disabled'])
+			self.sons_button.state(['!disabled'])
+		# -----------------------------------------------------------
+		if self.site_born_combo.get() == 'En este municipio' or self.site_born_combo.get() == 'No había nacido':
+			self.site_born_button.state(['disabled'])
+		else:
+			self.site_born_button.state(['!disabled'])
+		# -----------------------------------------------------------
+		if self._5_years_back_combo.get() == 'En este municipio' or self._5_years_back_combo.get() == 'No había nacido':
+			self._5_years_back_button.state(['disabled'])
+		else:
+			self._5_years_back_button.state(['!disabled'])
+		# -----------------------------------------------------------
+		if self._12_months_back_combo.get() == 'En este municipio' or self._12_months_back_combo.get() == 'No había nacido':
+			self._12_months_back_button.state(['disabled'])
+		else:
+			self._12_months_back_button.state(['!disabled'])
+		#------------------------------------------------------------
 		self.unknow_birth_check.after(1000,self.update)
+		
+	def message_data (self, parent):
+		""" Function doc """
+		
+		message = f"""
+{self.name} {self.surname} es {'mujer' if self.gender.get() == 1 else 'hombre'}
+sabe la fecha de nacimiento {self.unknow_birth.get()} y la fecha es {self.born_date.get()}
+Tipo de documento: {self.document_type_combo.get()} con numero: {self.document_number_spin.get()}
+Su relacion con el jefe de hogar es: {self.head_household_realtionship_combo.get()}
+Se reconoce asi mismo como: {self.culture_combo.get()}
+		"""
+		
+		if self.document_type.get() == '':
+			messagebox.showinfo(message = 'Elige una opcion válida en el tipo de documento', title = 'Error')
+		elif self.document_number_spin.get() == '0':
+			messagebox.showinfo(message = 'Ingresa el numero de documento', title = 'Error')
+		elif self.head_household_realtionship_combo.get() == '':
+			messagebox.showinfo(message = '¿Qué relación tiene con el jefe de hogar?', title = 'Error')
+		elif self.culture_combo.get() == '':
+			messagebox.showinfo(message = 'Elige una opcion valida para el tipo de cultura', title = 'Error')
+		else:
+			messagebox.askyesno(message = message, title = '¿Es la informacion correcta?')
 
 class Sons(tk.Toplevel):
 	""" Class doc """
@@ -277,6 +327,8 @@ class Sons(tk.Toplevel):
 		self.born_year_spin['state'] = 'disabled' if self.know_born.get() == 0 else 'normal'
 		
 		self.total_amount_sons_spin.after(1000, self.update)
+		
+
 
 class Site(tk.Toplevel):
 	""" Class doc """
