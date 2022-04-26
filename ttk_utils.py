@@ -17,12 +17,24 @@ class LabeledEntry(ttk.Frame):
 		
 		self.__text = text
 		self.kwargs = kwargs
-		ttk.Label(self, text = self.__text).grid(row = 0, column = 0,stick = 'WE')
 		
+		self.label = ttk.Label(self, text = self.__text)
 		self.entry = ttk.Entry(self)
+		
 		if 'show' in self.kwargs:
 			self.entry['show'] = self.kwargs['show']
+			
+		if 'state' in self.kwargs:
+			self.entry['state'] = self.kwargs['state']
+			self.label['state'] = self.kwargs['state']
+		
 		self.entry.grid(row = 0, column = 1, stick = 'WE')
+		self.label.grid(row = 0, column = 0,stick = 'WE')
+		
+	def state (self, state):
+		""" Function doc """
+		self.entry['state'] = state
+		self.label['state'] = state
 		
 	def get (self):
 		""" Return the self entry value """
@@ -37,11 +49,22 @@ class LabeledSpinbox(ttk.Frame):
 		ttk.Frame.__init__(self, parent)
 		
 		self.__text = text
+		self.kwargs = kwargs
 		
-		ttk.Label(self, text = self.__text).grid(row = 0, column = 0, stick = 'WE')
-		self.entry = tk.Spinbox(self)
+		self.label = ttk.Label(self, text = self.__text)
+		self.spin = tk.Spinbox(self)
 		
-		self.entry.grid(row = 0, column = 1, stick = 'WE')
+		if 'state' in self.kwargs:
+			self.label['state'] = self.kwargs['state']
+			self.spin['state'] = self.kwargs['state']
+		
+		self.label.grid(row = 0, column = 0, stick = 'WE')
+		self.spin.grid(row = 0, column = 1, stick = 'WE')
+	
+	def state (self, state):
+		""" Function doc """
+		self.spin['state'] = state
+		self.label['state'] = state
 	
 	def get (self):
 		""" Function doc """
@@ -58,12 +81,22 @@ class LabeledCombobox(ttk.Frame):
 		self.__text = text
 		self.kwargs = kwargs
 		
-		ttk.Label(self, text = self.__text).grid(row = 0, column = 0, stick = 'WE')
-		self.entry = ttk.Combobox(self)
+		self.label = ttk.Label(self, text = self.__text)
+		self.combo = ttk.Combobox(self)
 		if 'values' in self.kwargs:
-			self.entry['values'] = self.kwargs['values']
-		self.entry.grid(row = 0, column = 1, stick = 'WE')
+			self.combo['values'] = self.kwargs['values']
+		if 'state' in self.kwargs:
+			self.combo['state'] = self.kwargs['state']
+			self.label['state'] = self.kwargs['state']
+		
+		self.combo.grid(row = 0, column = 1, stick = 'WE')
+		self.label.grid(row = 0, column = 0, stick = 'WE')
+	
+	def state (self, state):
+		""" Function doc """
+		self.combo['state'] = state
+		self.label['state'] = state
 	
 	def get (self):
 		""" Function doc """
-		return self.entry.get()
+		return self.combo.get()

@@ -6,6 +6,9 @@ config = cp.ConfigParser()
 config.read('assets/config.cfg')
 today = datetime.today()
 
+person_list = list()
+personal_data_list = list()
+
 def save_dwelling_basic(normalized, direction, homes_amount, edification_use):
 	dwelling_basic = {
 		'normalized': normalized,
@@ -172,10 +175,10 @@ if __name__ == '__main__':
 	characteristics = None
 	services = None
 	dwelling_basic = None
-	person_list = None
+	
 	deseased_list = None
 	
-	personal_data_list = list()
+	
 	
 	
 	
