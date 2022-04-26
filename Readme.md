@@ -1,6 +1,6 @@
 Surveys program
 ===
-Version 0.03
+Version 0.04
 
 Hybrid combination between Dane surveys and Sisben surveys. In Colombia DANE is the national department of statistics that obtain information pf the civil population and your live quality. Sisben is a beneficiary program for poor families, for give subsides.
 
@@ -10,11 +10,19 @@ Know Issues
 ---
 
 - [x] Get info from entries generated from loop in home window.
-- [~] Get formated date in persons_ui.
+- [x] Get formated date in persons_ui.
 - [] Get formated direction in dwelling basic.
 - [] Enhance ttk_utils to simplify code.
 - [] Evaluate if use interface for "Next ▶" button.
 - [] Create "Pause" button.
+
+Persons
+- [x] born_date change the year each time that modify the calendar
+- [x] born_date not calculate user age
+- [~] Persons class save data in save_ui
+
+Save_ui
+- [x] Get today date from datetime module
 
 Log
 ---

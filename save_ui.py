@@ -1,9 +1,10 @@
 import json
 import configparser as cp
+from datetime import datetime
 
 config = cp.ConfigParser()
 config.read('assets/config.cfg')
-
+today = datetime.today()
 
 def save_dwelling_basic(normalized, direction, homes_amount, edification_use):
 	dwelling_basic = {
@@ -122,6 +123,18 @@ def save_config (route):
 	with open('assets/config.cfg', 'w') as cfg:
 		config.write(cfg)
 
+def save_persons (gender, unknow_bird, born_date, document_type, document_number, head_household_relationship, culture):
+	person = dict()
+	person['gender'] = gender
+	person['unknow bird'] = unknow_bird
+	person['born date'] = born_date
+	person['document type'] = document_type
+	person['document number'] = document_number
+	person['head household relationship'] = head_household_relationship
+	person['culture'] = culture
+	
+	personal_data_list.append(person)
+
 def load_config ():
 	""" Function doc """
 	
@@ -141,6 +154,8 @@ def main(args):
 	
 	# ~ save_location(12, 'Antioquia', 'El peñol', 'Urbano', '001', 196, '01', 'Centro', 'Sector Uno')
 	
+	
+	
 	return 0
 	
 geo_data = load_config()
@@ -159,5 +174,9 @@ if __name__ == '__main__':
 	dwelling_basic = None
 	person_list = None
 	deseased_list = None
+	
+	personal_data_list = list()
+	
+	
 	
 	sys.exit(main(sys.argv))

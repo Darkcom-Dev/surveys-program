@@ -2,7 +2,9 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from tkcalendar import DateEntry
+from datetime import datetime
 import ttk_utils as ttku
+import save_ui
 
 class Date(tk.Toplevel):
 	""" Class doc """
@@ -29,8 +31,12 @@ class Persons(tk.Frame):
 		self.gender_check = ttk.Checkbutton(self.person_frame, text = '¿Es mujer?', variable = self.gender)
 		self.gender_check.grid(row = 0, column = 0, padx = 10, pady = 5, sticky = 'WE')
 		
+		
+		
 		ttk.Label(self.person_frame, text = '¿Cual es la fecha de nacimiento?').grid(row = 1, column = 0, sticky = 'WE')
-		ttk.Label(self.person_frame, text = 'Años cumplidos').grid(row = 1, column = 1, sticky = 'WE', padx = 5) # Esto se calcula con la fecha de nacimiento
+		
+		self.age = ttk.Label(self.person_frame, text = f'Años cumplidos: ')
+		self.age.grid(row = 1, column = 1, sticky = 'WE', padx = 5) # Esto se calcula con la fecha de nacimiento
 		
 		self.unknow_birth = tk.IntVar()
 		self.unknow_birth_check = ttk.Checkbutton(self.person_frame, text = 'Sabe la fecha', variable = self.unknow_birth)
@@ -38,10 +44,10 @@ class Persons(tk.Frame):
 		self.unknow_birth_check.after(1000,self.update)
 		
 		
-		self.born_date = DateEntry(self.person_frame, selectmode ='day', year = 2000, month = 1, day = 1)
+		self.born_date = DateEntry(self.person_frame, selectmode ='none', year = 2000, month = 1, day = 1, date_pattern ='yyyy-MM-dd')
 		self.born_date.grid(row = 2, column = 1, sticky = 'WE', padx = 10, pady = 5)
 		
-		
+
 		
 		ttk.Label(self.person_frame, text = 'Tipo de documento').grid(row = 3, column = 0, sticky = 'WE', padx = 5, pady = 5)
 		ttk.Label(self.person_frame, text = 'Número de documento').grid(row = 3, column = 1, sticky = 'WE', padx = 5, pady = 5)
@@ -139,6 +145,7 @@ class Persons(tk.Frame):
 		self.sons_button = ttk.Button(self.women_frame,text = 'Hijos', command = self.sons)
 		self.sons_button.pack()
 		
+		# Next --------------------------------------------- >>>>
 		self.next_button = ttk.Button(self, text = 'Siguiente ▶', command = lambda : self.message_data(parent))
 		self.next_button.pack(fill = tk.X)
 		
@@ -168,6 +175,12 @@ class Persons(tk.Frame):
 			self.born_date.state(['!disabled'])
 		else:
 			self.born_date.state(['disabled'])
+			
+		self.date = save_ui.today.date()
+		born_formated = datetime.strptime(self.born_date.get(),'%Y-%m-%d').date()
+		self.age.configure(text = f'Años cumplidos: {(self.date - born_formated).days // 365}')
+		
+		
 		#------------------------------------------------------------
 		if self.gender.get() == 0:
 			self.women_frame.state(['disabled'])
@@ -213,7 +226,13 @@ Se reconoce asi mismo como: {self.culture_combo.get()}
 		elif self.culture_combo.get() == '':
 			messagebox.showinfo(message = 'Elige una opcion valida para el tipo de cultura', title = 'Error')
 		else:
-			messagebox.askyesno(message = message, title = '¿Es la informacion correcta?')
+			if messagebox.askyesno(message = message, title = '¿Es la informacion correcta?'):
+				print('La informacion ha sido guardada satisfactoriamente')
+				save_ui.save_persons(self.gender.get(), self.unknow_birth.get(), 
+					self.born_date.get(), self.document_type_combo.get(), 
+					self.document_number_spin.get(), 
+					self.head_household_realtionship_combo.get(), 
+					self.culture_combo.get())
 
 class Sons(tk.Toplevel):
 	""" Class doc """
@@ -355,21 +374,46 @@ class Site(tk.Toplevel):
 		self.country_entry.grid(row = 2, column = 1, sticky = 'WE', padx = 10, pady = 5)
 		
 		ttk.Label(site_frame, text = '¿En que año llegó a Colombia').grid(row = 3, column = 0, sticky = 'WE', padx = 5)
-		self.arrival_year = tk.Spinbox(site_frame,from_ = 1950, to = 2150, font = self.font)
+		self.arrival_year = tk.Spinbox(site_frame,from_ = 1950, to = 2150)
 		self.arrival_year.grid(row = 3, column = 1, sticky = 'WE', padx = 10, pady = 5)
 		
 		## ~ ¿Vivia en?
 		self.locality_type = tk.StringVar()
-		ttk.Label(site_frame, text = '¿Vivia en?', font = self.font).grid(row = 4, column = 0, sticky = 'WE', padx = 5)
+		ttk.Label(site_frame, text = '¿Vivia en?').grid(row = 4, column = 0, sticky = 'WE', padx = 5)
 		self.locality_type_combo = ttk.Combobox(site_frame, textvariable = self.locality_type, font = self.font)
 		self.locality_type_combo.grid(row = 4, column = 1, sticky = 'WE', padx = 10)
 		self.locality_type_combo['state'] = 'readonly'
 		self.locality_type_combo['values'] = ['Cabecera municipal','Un centro poblado','Rural disperso']
 		
-		self.close_button = ttk.Button(site_frame, text = 'Cerrar')
+		self.close_button = ttk.Button(site_frame, text = 'Cerrar', command = self.message_data)
 		self.close_button.grid(row = 5, column = 0, columnspan = 2, sticky = 'WE', padx = 10, pady = 10, )
 		
 
+	def message_data (self):
+		""" Function doc """
+		
+		message = f'''
+Departamento: {self.departament_entry.get()}
+Municipio: {self.municipality_entry.get()}
+Pais: {self.country_entry.get()}
+Año de llegada: {self.arrival_year.get()}
+Localidad: {self.locality_type_combo.get()}
+		'''
+		
+		if self.departament_entry.get() == '':
+			messagebox.showinfo(message = 'Ingrese el departamento', title = 'Error')
+		elif self.municipality_entry.get() == '':
+			messagebox.showinfo(message = 'Ingrese el municipio', title = 'Error')
+		elif self.country_entry.get() == '':
+			messagebox.showinfo(message = 'Ingrese el pais', title = 'Error')
+		elif self.arrival_year.get() == '':
+			messagebox.showinfo(message = 'Ingrese el año de llegada al pais', title = 'Error')
+		elif self.locality_type_combo.get() == '':
+			messagebox.showinfo(message = 'Elija una opcion valida para localidad', title = 'Error')
+		else:
+			if messagebox.askyesno(message = message, title = 'Salvar información'):
+				print('La informacion de configuración de localidad ha sido guardada satisfactoriamente')
+				
 		
 class Ethnicity(tk.Toplevel):
 	""" Class that get Ethnicity info of a person """
