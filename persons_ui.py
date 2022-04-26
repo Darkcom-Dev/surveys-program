@@ -6,14 +6,6 @@ from datetime import datetime
 import ttk_utils as ttku
 import save_ui
 
-class Date(tk.Toplevel):
-	""" Class doc """
-	
-	def __init__ (self):
-		""" Class initialiser """
-		super().__init__()
-		pass
-
 class Persons(tk.Frame):
 	""" Class doc """
 	
@@ -86,6 +78,9 @@ class Persons(tk.Frame):
 		self.culture_combo.grid(row = 7, column = 1, sticky = 'WE', padx = 10, pady = 5)
 		
 		self.culture_combo['values'] = ['Indigena','Gitan@ o Rrom', 'Raizal del archipielago de san Andres, Providencia, Santa Catalina','Palenquer@ de san Basilio','Negr@, mulat@, afrodescendiente, afrocolombian@','Ningun grupo étnico']
+		
+		self.ethnicity_button = ttk.Button(self.culture_frame, text = 'Informacion cultural', command = self.configure_ethnicity)
+		self.ethnicity_button.grid(row = 7, column = 2, sticky = 'WE', padx = 10, pady = 5)
 		
 		# ---------------------------------------------------- Movement
 		self.movement_frame = ttk.Labelframe(self, text = 'Movilidad')
@@ -165,9 +160,9 @@ class Persons(tk.Frame):
 		""" Function doc """
 		born_site = Site()
 	
-	def configure_born (self):
+	def configure_ethnicity (self):
 		""" Function doc """
-		born = Date()
+		born = Ethnicity()
 
 	def update (self):
 		""" Function doc """
@@ -432,30 +427,45 @@ class Ethnicity(tk.Toplevel):
 		
 		self.ethnicity = 'pueblo indigena','vitsa'
 		self.clan = 'clan','kumpania'
-		ttk.Label(self,text = f'¿A cual {self.ethnicity[0]} pertenece?').pack()
-		self.ethnicity_entry = ttk.Entry(self)
+		
+		self.ethnicity_entry = ttku.LabeledEntry(self,text = f'¿A cual {self.ethnicity[0]} pertenece?'.center(35,'.'))
 		self.ethnicity_entry.pack()
 		
-		ttk.Label(self,text = f'¿A cual {self.clan[0]} pertenece?').pack()
-		self.clan_entry = ttk.Entry(self)
+		self.clan_entry = ttku.LabeledEntry(self,text = f'¿A cual {self.clan[0]} pertenece?'.center(35,'.'))
 		self.clan_entry.pack()
 		
 		self.native_language = tk.IntVar()
 		self.native_language_check = ttk.Checkbutton(self,text = '¿Habla la lengua nativa de su pueblo?')
-		self.native_language_check.pack()
+		self.native_language_check.pack(fill = tk.X, padx = 5, pady = 5)
 		
 		self.understand_language = tk.IntVar()
-		self.understand_language_check = ttk.Checkbutton(self,text = '¿Habla la lengua nativa de su pueblo?')
-		self.understand_language_check.pack()
+		self.understand_language_check = ttk.Checkbutton(self,text = '¿Entiende la lengua nativa de su pueblo?')
+		self.understand_language_check.pack(fill = tk.X, padx = 5, pady = 5)
 		
 		self.other_languages = tk.IntVar()
-		self.other_languages_check = ttk.Checkbutton(self,text = '¿Habla la lengua nativa de su pueblo?')
-		self.other_languages_check.pack()
+		self.other_languages_check = ttk.Checkbutton(self,text = '¿Habla otras lenguas nativas?')
+		self.other_languages_check.pack(fill = tk.X, padx = 5, pady = 5)
 		
-		ttk.Label(self,text = 'Cuantas')
-		self.amounts = tk.IntVar()
-		self.amounts_spin = tk.Spinbox(self, textvariable = self.amounts)
+		self.amounts_spin = ttku.LabeledSpinbox(self, text = 'Cuantas: '.center(35, '.'))
+		self.amounts_spin.pack(fill = tk.X, padx = 5, pady = 5)
 		
+		self.close_button = ttk.Button(self, text = 'Cerrar', command = self.update).pack(fill = tk.X, padx = 5, pady = 5)
+		
+	def update (self):
+		""" Function doc """
+		
+		self.amounts_spin.after(1000, self.update)
+
+		print('Ocurre algo?')
+		if self.native_language.get() == 0:
+			self.understand_language_check.state(['!disabled'])
+		else:
+			self.understand_language_check.state(['disabled'])
+			
+		if self.other_languages.get() == 0:
+			self.amounts_spin.state(['!disabled'])
+		else:
+			self.amounts_spin.state(['disabled'])
 
 class Application(tk.Tk):
 	""" Class doc """

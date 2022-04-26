@@ -19,8 +19,8 @@ Know Issues
 Persons
 - [x] born_date change the year each time that modify the calendar
 - [x] born_date not calculate user age
-- [~] Persons class save data in save_ui
-
+- [_] Persons class save data in save_ui
+- [x] Active ethnicity Top Level
 Save_ui
 - [x] Get today date from datetime module
 
