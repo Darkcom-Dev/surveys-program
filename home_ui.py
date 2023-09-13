@@ -120,6 +120,8 @@ class Home(ttk.Frame):
 			message = 'Cocina no tiene una elección válida'
 		elif self.water_source_combo.get() == '':
 			message = 'Fuente de agua no tiene una elección válida'
+		elif len(save_ui.person_list) == 0:
+			message = 'No hay personas del hogar inscritas'
 		else:
 			message = f'''
 Cuartos: {self.rooms_spin.get()}
@@ -133,12 +135,15 @@ Personas: {self.deceased_amount_spin.get()}
 		
 		if self.kitchen_combo.get() == '' or self.water_source_combo.get() == '':
 			messagebox.showwarning(message = message, title = 'Error')
+		elif len(save_ui.person_list) == 0:
+			messagebox.showwarning(message = message, title = 'Error')
 		else:
 			if messagebox.askyesno(message = message, title = 'Salvar información home'):
 				print('Los datos del hogar han sido guardados satisfactoriamente') 
 				save_ui.save_home(self.rooms_spin.get(), 
 					self.bedrooms_spin.get(), self.kitchen_combo.get(), 
 					self.water_source_combo.get(), self.deceased_amount_spin.get()) 
+				save_ui.total_persons_amount = self.persons_amount.get()
 				parent.switch_frame(goods_ui.Goods)
 		
 	def deceased (self):
@@ -231,7 +236,7 @@ class Home_window(tk.Toplevel):
 	def __init__ (self, total, *args, **kwargs):
 		""" Class initialiser """
 		super().__init__(*args, **kwargs)
-		self.title('Registro del home.')
+		self.title('Registro del hogar.')
 		self.config(width = 300, height = 200)
 		self.total_hogar = total
 		
@@ -312,8 +317,6 @@ personas secuestradas, personas en vacaciones fuera del hogar, etc)'''
 							'first surname': person['f_surname'].get(),
 							'second surname':person['s_surname'].get()}
 				persons_formated_list.append(person)
-				
-				
 		
 		if complete:
 			save_ui.person_list = persons_formated_list

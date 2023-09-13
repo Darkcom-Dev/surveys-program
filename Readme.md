@@ -2,12 +2,12 @@ Surveys program
 ===
 Version 0.05
 
-Hybrid combination between Dane surveys and Sisben surveys. 
+Hybrid combination between Dane surveys and Sisben surveys.<br> 
 In Colombia DANE is the national department of statistics that obtain information pf the civil population and your live quality. 
-Sisben is a beneficiary program for poor families, for give subsides.
+Sisben is a beneficiary program for poor families, for give subsides.<br>
 
 My intension is create a combination of this surveys and give a grade if deserve a subside in Colombia, 
-but the final reason is auto learning and expanding portfolio.
+but the final reason is auto learning and expanding portfolio.<br>
 
 Know Issues
 ---

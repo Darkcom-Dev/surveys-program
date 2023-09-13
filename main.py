@@ -168,6 +168,7 @@ import random
 
 import login #0
 
+
 # ============================================================= Classes
 
 
@@ -201,6 +202,7 @@ class Application(tk.Tk):
 		self.style = ttk.Style()
 		# ~ print(self.style.configure('TNotebook').keys())
 		# ~ self.style.configure('TWidget', background = self.bg_general, foreground = self.fg_enabled, font = self.font_general)
+		'''
 		self.style.configure('TLabelframe', background = self.bg_general, foreground = self.fg_enabled, font = self.font_general)
 		self.style.configure('TFrame', background = self.bg_widget, foreground = self.fg_enabled, font = self.font_general)
 		self.style.configure('TLabel', background = self.bg_widget, foreground = self.fg_enabled, font = self.font_general)
@@ -210,6 +212,7 @@ class Application(tk.Tk):
 		self.style.configure('TCombobox', background = self.bg_widget, foreground = self.fg_enabled, font = self.font_general) # Esto modifica la flecha de despliegue
 		self.style.configure('TSpinbox', background = self.bg_widget, foreground = self.fg_enabled, font = self.font_general)
 		self.style.configure('Text', font = self.font_general, background = '#8631E8', foreground = '#5FE888')
+		'''
 		# --------------------------------------------------------------
 
 		self._frame = None

@@ -25,7 +25,7 @@ class Persons(tk.Frame):
 		self.gender_check = ttk.Checkbutton(self.person_frame, text = '¿Es mujer?', variable = self.gender)
 		self.gender_check.grid(row = 0, column = 0, padx = 10, pady = 5, sticky = 'WE')
 		
-		
+		self._age = 0
 		
 		ttk.Label(self.person_frame, text = '¿Cual es la fecha de nacimiento?').grid(row = 1, column = 0, sticky = 'WE')
 		
@@ -68,7 +68,8 @@ class Persons(tk.Frame):
 		# Creo que es comveniente hacer una ventana aparte para este tema
 		# sHn - nostalgism
 		# DVYZ - Flood Tide
-		
+		# Pixelated violence - Key Puncher . synthetic
+		# Airglow | memory bank
 		# ----------------------------------------------------- Cultura
 		self.culture_frame = ttk.Labelframe(self, text = 'Cultura')
 		self.culture_frame.pack(padx = 5, pady = 5, fill = tk.X)
@@ -127,7 +128,8 @@ class Persons(tk.Frame):
 		self.greater10_frame = ttk.LabelFrame(self, text = 'Estado civil para mayores de 10 años.')
 		self.greater10_frame.pack(padx = 5, pady = 5, fill = tk.X)
 		
-		ttk.Label(self.greater10_frame, text = '¿Actualmente cual es su estado civil?').grid(row = 0, column = 0, sticky = 'WE', padx = 5)
+		self.civil_state_label = ttk.Label(self.greater10_frame, text = '¿Actualmente cual es su estado civil?')
+		self.civil_state_label.grid(row = 0, column = 0, sticky = 'WE', padx = 5)
 		
 		self.civil_state = tk.StringVar()
 		self.civil_state_combo = ttk.Combobox(self.greater10_frame, textvariable = self.civil_state, state = 'readonly')
@@ -143,8 +145,7 @@ class Persons(tk.Frame):
 		self.sons_button.pack()
 		
 		# Next --------------------------------------------- >>>>
-		self.next_button = ttk.Button(self, text = 'Siguiente ▶', command = lambda : self.message_data(parent))
-		self.next_button.pack(fill = tk.X)
+		ttk.Button(self, text = 'Siguiente ▶', command = lambda: self.message_data(parent)).pack(fill = tk.X, padx = 10, pady=5)
 		
 	def sons (self):
 		""" Function doc """
@@ -175,16 +176,28 @@ class Persons(tk.Frame):
 			
 		self.date = save_ui.today.date()
 		born_formated = datetime.strptime(self.born_date.get(),'%Y-%m-%d').date()
-		self.age.configure(text = f'Años cumplidos: {(self.date - born_formated).days // 365}')
-		
-		
-		#------------------------------------------------------------
-		if self.gender.get() == 0:
-			self.women_frame.state(['disabled'])
-			self.sons_button.state(['disabled'])
+		self._age = (self.date - born_formated).days // 365
+		self.age.configure(text = f'Años cumplidos: {self._age}')
+				
+		if self._age > 10:
+			self.greater10_frame.state(['!disabled'])
+			self.civil_state_combo.state(['!disabled'])
+			self.civil_state_label.state(['!disabled'])
+			if self.gender.get() == 0:
+				self.women_frame.state(['disabled'])
+				self.sons_button.state(['disabled'])
+			else:
+				self.women_frame.state(['!disabled'])
+				self.sons_button.state(['!disabled'])
 		else:
-			self.women_frame.state(['!disabled'])
-			self.sons_button.state(['!disabled'])
+			self.civil_state_combo.set('Solter@')
+			self.civil_state_combo.state(['disabled'])
+			self.civil_state_label.state(['disabled'])
+			self.greater10_frame.state(['disabled'])
+			self.women_frame.state(['disabled'])
+			
+		#------------------------------------------------------------
+
 		# -----------------------------------------------------------
 		if self.site_born_combo.get() == 'En este municipio' or self.site_born_combo.get() == 'No había nacido':
 			self.site_born_button.state(['disabled'])
@@ -230,6 +243,7 @@ Se reconoce asi mismo como: {self.culture_combo.get()}
 					self.document_number_spin.get(), 
 					self.head_household_realtionship_combo.get(), 
 					self.culture_combo.get())
+				save_ui.age = self._age
 				parent.switch_frame(hui.Health)
 
 class Sons(tk.Toplevel):
@@ -421,6 +435,7 @@ class Application(tk.Tk):
 	def __init__ (self):
 		""" Class initialiser """
 		tk.Tk.__init__(self)
+		self.title('Personas')
 		self._frame = Persons(self)
 		self._frame.pack()
 

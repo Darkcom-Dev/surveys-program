@@ -2,12 +2,16 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 
-class Profesional(tk.Frame):
+import save_ui
+import end_ui
+import persons_ui
+
+class Profesional(ttk.Frame):
 	""" Class that get educative and professional info """
 	
 	def __init__ (self, parent):
 		""" Class initialiser """
-		super().__init__(parent)
+		ttk.Frame.__init__(self, parent)
 		
 		self.profession_frame = ttk.LabelFrame(parent, text = 'Información profesional')
 		self.profession_frame.pack(fill = tk.X, padx = 5, pady = 5, ipady = 5)
@@ -43,9 +47,9 @@ class Profesional(tk.Frame):
 		self.laboral_situation_combo['state'] = 'readonly'
 		self.laboral_situation_combo['values'] = ['Trabajó una hora en semana en una actividad que le generó un ingreso','Trabajó en un negocio por lo menos una hora sin que le pagaran', 'No trabajó, pero tenía un empleo, negocio por el que recibe ingresos','Buscó trabajo','Vivió de jubilacion, pensión o renta','Estudió','Realizó oficios del hogar','Es incapacitado permanente para trabajar','Estuvo en otra situación']
 		
-		ttk.Button(parent, text = 'Siguiente ▶', command = self.message_data).pack(fill = tk.X, padx = 10, pady = 5)
+		ttk.Button(parent, text = 'Siguiente ▶', command=lambda: self.message_data(parent)).pack(fill = tk.X, padx = 10, pady = 5)
 	
-	def message_data (self):
+	def message_data (self, parent):
 		""" Function doc """
 		
 		message = f'''
@@ -62,7 +66,17 @@ Situacion laboral: {self.laboral_situation_combo.get()}
 		elif self.laboral_situation_combo.get() == '':
 			messagebox.showwarning(message = 'Situacion laboral no tiene una selección válida', title = 'Error')
 		else:
-			messagebox.askyesno(message = message, title = 'Salvar información profesional')
+			if messagebox.askyesno(message = message, title = 'Salvar información profesional'):
+				save_ui.save_profesional(
+					self.write.get(), self.educative_assistance.get(), 
+					self.institute_type_combo.get(), self.grade_institute_combo.get(),
+					self.laboral_situation_combo.get()
+				)
+				save_ui.person_index += 1
+				if save_ui.person_index < save_ui.total_persons_amount:
+					parent.switch_frame(persons_ui.Persons)
+				else:
+					parent.switch_frame(end_ui.End)
 	
 	def update (self):
 		""" Function doc """

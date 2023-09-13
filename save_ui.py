@@ -8,6 +8,11 @@ today = datetime.today()
 
 person_list = list()
 personal_data_list = list()
+health_list = list()
+profesional_list = list()
+age = 0
+total_persons_amount = 0
+person_index = 0
 
 def save_dwelling_basic(normalized, direction, homes_amount, edification_use):
 	dwelling_basic = {
@@ -110,6 +115,28 @@ def save_spends(feeding, transport, education, health, public_services, mobile, 
 		'other': other_expenses
 	}
 
+def save_health(illness_30_days, treatment, attended, attention_quality, dificulties, motive):
+	health = {
+		'illness 30d' : illness_30_days,
+		'treatment' : treatment,
+		'attended' : attended,
+		'attention quality' : attention_quality,
+		'dificulties' : dificulties,
+		'motive' : motive	
+	}
+	health_list.append(health)
+	
+def save_profesional (know_read, assist_institute, institute_type, grade, activity):
+	""" Function doc """
+	profesional = {
+		'read' : know_read,
+		'assist institute' : assist_institute,
+		'type' : institute_type,
+		'grade' : grade,
+		'activity' : activity
+	}
+	profesional_list.append(profesional)
+
 def save_history(living_time, floods, avalanche, earthquake, conflagration, storms, terrain_subsidence):
 	history = {
 		'time': living_time,
@@ -165,6 +192,7 @@ geo_data = load_config()
 
 if __name__ == '__main__':
 	import sys
+
 	history = None
 	spends = None
 	goods = None

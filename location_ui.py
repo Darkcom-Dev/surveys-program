@@ -16,7 +16,7 @@ import save_ui
 class Location(ttk.Frame):
 	""" Class doc """
 	
-	def __init__ (self,parent):
+	def __init__ (self, parent):
 		""" Class initialiser """
 		ttk.Frame.__init__(self, parent)
 

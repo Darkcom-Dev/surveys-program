@@ -2,12 +2,15 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 
-class Health(tk.Frame):
+import save_ui
+import profesional_ui as prui
+
+class Health(ttk.Frame):
 	""" Class doc """
 	
 	def __init__ (self, parent):
 		""" Class initialiser """
-		super().__init__(parent)
+		ttk.Frame.__init__(self, parent)
 		self.illness_30_days_sentence = '''
 ¿En los ultimos 30 dias, tuvo alguna enfermedad, accidente, 
 problema odontológico o algun otro problema de salud que no haya 
@@ -27,8 +30,10 @@ interactuar con los demas?
 		self.illness_30_days = tk.IntVar()
 		self.illness_30_days_check = ttk.Checkbutton(self.health_frame, text = self.illness_30_days_sentence, variable = self.illness_30_days)
 		self.illness_30_days_check.grid(row = 0, column = 0, columnspan = 2, sticky = 'WE', padx = 5)
+		self.illness_30_days_check.after(1000,self.update)
 		
-		ttk.Label(self.health_frame,text = 'Para tratar ese problema de salud ¿Que hizo?').grid(row = 1, column = 0, sticky = 'WE', padx = 5)
+		self.treatment_label = ttk.Label(self.health_frame,text = 'Para tratar ese problema de salud ¿Que hizo?')
+		self.treatment_label.grid(row = 1, column = 0, sticky = 'WE', padx = 5)
 		
 
 		self.treatment_combo = ttk.Combobox(self.health_frame)
@@ -40,7 +45,8 @@ interactuar con los demas?
 		self.attended_check = ttk.Checkbutton(self.health_frame,text = '¿Lo atendieron?',variable = self.attended)
 		self.attended_check.grid(row = 2, column = 0, sticky = 'WE', padx = 5)
 		
-		ttk.Label(self.health_frame,text = '¿Que tal fue la calidad del servicio de salud?').grid(row = 3, column = 0, sticky = 'WE', padx = 5)
+		self.attention_quality_label = ttk.Label(self.health_frame,text = '¿Que tal fue la calidad del servicio de salud?')
+		self.attention_quality_label.grid(row = 3, column = 0, sticky = 'WE', padx = 5)
 		
 		
 		self.attention_quality_combo = ttk.Combobox(self.health_frame)
@@ -53,7 +59,7 @@ interactuar con los demas?
 		self.dificulties_check = ttk.Checkbutton(self.health_frame,text = self.limitation_sentence, variable = self.dificulties)
 		self.dificulties_check.grid(row = 5, column = 0, columnspan = 2, sticky = 'WE', padx = 5)
 		
-		self.handicap_button = ttk.Button(self.health_frame, text = 'Configurar handicap', command = self.configure_handicap)
+		self.handicap_button = ttk.Button(self.health_frame, text = 'Configurar discapacidad', command = self.configure_handicap)
 		self.handicap_button.grid(row = 5, column = 1, sticky = 'SE', padx = 5)
 		
 		self.less10_frame = ttk.LabelFrame(parent, text = 'Para menores de 10 años')
@@ -66,13 +72,22 @@ interactuar con los demas?
 		self.motive_combo['state'] = 'readonly'
 		self.motive_combo['values'] = ['Asiste a un hogar comunitario, jardin, centro de desarrollo infantil', 'Con padre o madre en la vivienda','Con padre o madre en el trabajo','Con un pariente mayor de 18 años en la vivienda','Al cuidado de un pariente o persona menor de 18 años en la vivienda','Al cuidado de un pariente o de otra persona en otro lugar','En la vivienda solo']
 		
-		ttk.Button(parent, text = 'Siguiente ▶', command = self.message_data).pack(fill = tk.X, padx = 10, pady = 5)
+		print(f'edad: {save_ui.age}'.center(40,'='))
+		if save_ui.age > 10:
+			self.less10_frame.state(['disabled'])
+			self.motive_combo.state(['disabled'])
+			self.motive_combo.set('N/A')
+		else:
+			self.less10_frame.state(['!disabled'])
+			self.motive_combo.state(['!disabled'])
+		
+		ttk.Button(parent, text = 'Siguiente ▶', command=lambda: self.message_data(parent)).pack(fill = tk.X, padx = 10, pady = 5) #
 		
 	def configure_handicap (self):
 		""" Function that call the Handicap Class """
 		handicap = Handicap()
 		
-	def message_data (self):
+	def message_data (self, parent):
 		""" Function doc """
 		message = f'''
 Enfermedad en 30 dias: {'NO' if self.illness_30_days.get() == 0 else 'SI'}
@@ -90,8 +105,46 @@ Motivo: {self.motive_combo.get()}
 		elif self.motive_combo.get() == '':
 			messagebox.showwarning(message = 'Motivo no tiene una selección válida', title = 'Error')
 		else:
-			messagebox.askyesno(message = message, title = 'Salvar salud')
+			if messagebox.askyesno(message = message, title = 'Salvar salud'):
+				save_ui.save_health(self.illness_30_days.get(), 
+					self.treatment_combo.get(), 
+					self.attended.get(),
+					self.attention_quality_combo.get(),
+					self.dificulties.get(),
+					self.motive_combo.get()
+				)
+				print('Configuracion de Salud salvada exitosamente.')
+				parent.switch_frame(prui.Profesional)
 
+	
+	def update(self):
+		
+		if self.illness_30_days.get() == 0:
+			self.treatment_combo.set('No hizo nada')
+			self.treatment_combo.state(['disabled'])
+			self.treatment_label.state(['disabled'])
+			
+			self.attended.set(False)
+			self.attended_check.state(['disabled'])
+			
+			self.attention_quality_label.state(['disabled'])
+			self.attention_quality_combo.set('N/A')
+			self.attention_quality_combo.state(['disabled'])
+		else:
+			self.treatment_combo.state(['!disabled'])
+			self.treatment_label.state(['!disabled'])
+			
+			self.attended_check.state(['!disabled'])
+			
+			self.attention_quality_label.state(['!disabled'])
+			self.attention_quality_combo.state(['!disabled'])
+		
+		if self.dificulties.get() == 0:
+			self.handicap_button.state(['disabled'])
+		else:
+			self.handicap_button.state(['!disabled'])
+		
+		self.illness_30_days_check.after(1000,self.update)
 
 class Handicap(tk.Toplevel):
 	""" Class that get all handicaps data """
@@ -140,7 +193,6 @@ class Handicap(tk.Toplevel):
 			help_check.grid(row = len(self.labels) + 4 + l, column = 0, sticky = 'WE', padx = 15)
 			self.ayudas.append(boolean)
 			
-		
 
 class Application(tk.Tk):
 	""" Class doc """
@@ -149,9 +201,11 @@ class Application(tk.Tk):
 		""" Class initialiser """
 		tk.Tk.__init__(self)
 		self._frame = Health(self)
+		self.title('Salud')
 		self._frame.pack()
 
 def main(args):
+	save_ui.age = 11
 	root = Application()
 	root.mainloop()
 	return 0

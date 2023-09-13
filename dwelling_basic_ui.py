@@ -6,7 +6,7 @@ from tkinter import ttk
 from tkinter import messagebox
 import save_ui
 import sworn_declaration_ui as dj
-
+import end_ui
 # Ventana 2
 
 # ============================================================ Classes
@@ -94,8 +94,11 @@ Uso vivienda: {self.edification_use_combo.get()}
 				save_ui.save_dwelling_basic(self.normalized_direction.get(), 
 					self.direction_entry.get(), 
 					self.homes_amount_spin.get(), 
-					self.edification_use_combo.get()) 
-				parent.switch_frame(dj.Sworn_declaration)
+					self.edification_use_combo.get())
+				if self.edification_use_combo.get() == 'Vivienda Desocupada' or self.edification_use_combo.get() == 'Ausente':
+					parent.switch_frame(end_ui.End)
+				else:
+					parent.switch_frame(dj.Sworn_declaration)
 
 class Application(tk.Tk):
 	""" Class doc """

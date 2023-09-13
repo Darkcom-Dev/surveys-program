@@ -4,6 +4,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.scrolledtext import ScrolledText
 import dwelling_data_ui as idv
+import end_ui
 # Ventana 3
 
 # ============================================================ Classes
@@ -28,9 +29,8 @@ class Sworn_declaration(ttk.Frame):
 		self.st.insert('1.0',self.sworn_declaration.read()) 
 		self.st['state'] = 'disabled'
 		self.st.grid(column = 0, row = 0, columnspan = 2, padx = 10, pady = 5, sticky = 'WE')
-		print(tk.Misc.winfo_class(self.st))
 		
-		self.refuse_button = ttk.Button(self, text = 'No Acepto', command = self.destroy)
+		self.refuse_button = ttk.Button(self, text = 'No Acepto', command = lambda: parent.switch_frame(end_ui.End))
 		self.refuse_button.grid(row = 1, column = 0, sticky = 'WE')
 		self.accept_button = ttk.Button(self, text = 'Acepto', command = lambda: parent.switch_frame(idv.Dwelling_data))
 		self.accept_button.grid(row = 1, column = 1, sticky = 'WE')
@@ -38,15 +38,7 @@ class Sworn_declaration(ttk.Frame):
 		self.sworn_declaration.close()
 		self.data_treatment.close()
 		
-	def accept_action (self):
-		""" Action for accept button """
-		print('Accept Action')
-		
-	def refuse_action(self):
-		'''Action for refuse button
-		Hacer una ventana en comun si rechaza la entrevista.
-		'''
-		print('Refuse Action')
+
 
 class Application(tk.Tk):
 	""" Class doc """
