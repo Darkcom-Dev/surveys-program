@@ -2,24 +2,31 @@
 # -*- coding: utf-8 -*-
 #
 
-
 # ====================================================== Imports
 
 import tkinter as tk
-from tkinter import ttk
-from tkinter import messagebox
+from tkinter import messagebox, ttk
+
 import autentication
-import ttk_utils as ttku
 import dashboard
+import ttk_utils as ttku
+
 # ====================================================== Classes
 
-
-
 class Login(ttk.Frame):
-	""" Class doc """
 	
 	def __init__ (self, parent):
-		""" Class initialiser """
+		"""
+		Class initialiser.
+
+		Initialises the Login class with the given parent frame.
+
+		Parameters:
+			parent (tkinter.Frame): The parent frame to initialise with.
+
+		Returns:
+			None
+		"""
 		tk.Frame.__init__(self, parent)
 		
 		self.user = ttku.LabeledEntry(self,'_Usuario: ')
@@ -36,6 +43,15 @@ class Login(ttk.Frame):
 		ttk.Button(self, text = 'Siguiente', command = lambda: self.authenticate_password(parent)).pack(fill = tk.X)
 		
 	def authenticate_password(self, parent):
+		"""
+		Authenticates the user's password.
+
+		Parameters:
+			parent: The parent frame to switch to upon successful authentication.
+
+		Returns:
+			None
+		"""
 		if self.user.get() == '':
 			messagebox.showwarning(message = 'Ingrese el usuario', title = 'Error')
 		elif self.password.get() == '':
@@ -50,10 +66,12 @@ class Login(ttk.Frame):
 		
 
 class Application(tk.Tk):
-	""" Class doc """
 	
 	def __init__ (self):
-		""" Class initialiser """
+		"""
+		Initialises the Application class by calling the Tk class constructor and setting the window title.
+		Sets the initial frame to an instance of the Login class and packs it with the dashboard.
+		"""
 		tk.Tk.__init__(self)
 		self.title('Login')
 		
@@ -62,11 +80,20 @@ class Application(tk.Tk):
 
 # ====================================================== Program Entry
 
-def main(args):
+def main():
+	"""
+	Entry point of the application.
+
+	Parameters:
+		None
+
+	Returns:
+		int: The exit status of the application.
+	"""
+
 	App = Application()
 	App.mainloop()
 	return 0
 
 if __name__ == '__main__':
-	import sys
-	sys.exit(main(sys.argv))
+	main()

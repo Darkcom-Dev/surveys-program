@@ -10,11 +10,21 @@ import end_ui
 # ============================================================ Classes
 
 class Sworn_declaration(ttk.Frame):
-	""" Clase de interfaz dedicada a la sworn_declaration juramentada y 
-	tratamiento de datos """
+	""" 
+	An dedicated class interface to sworn_declaration and data processing
+	"""
 	
 	def __init__ (self,parent):
-		""" Class initialiser """
+		"""
+		Initialises the Sworn_declaration class.
+
+		Parameters:
+			self (Sworn_declaration): The instance of the class.
+			parent: The parent widget of the current instance.
+
+		Returns:
+			None
+		"""
 		ttk.Frame.__init__(self, parent)
 		
 		self.font = ('Iosevka 10')
@@ -41,21 +51,31 @@ class Sworn_declaration(ttk.Frame):
 
 
 class Application(tk.Tk):
-	""" Class doc """
 	
 	def __init__ (self):
-		""" Class initialiser """
+		"""
+		Class initialiser for the Application class.
+
+		Initialises the Application object by calling the tk.Tk class initialiser 
+		and setting the _frame attribute to a Sworn_declaration object.
+		"""
 		tk.Tk.__init__(self)
 		self._frame = Sworn_declaration(self)
 		self._frame.pack()
 
 # ====================================================== Program Entry
 
-def main(args):
+def main():
+	"""
+	Program entry point.
+
+	Initializes the Application class and starts the main event loop.
+	
+	:return: int: The program's exit status.
+	"""
 	root = Application()
 	root.mainloop()
 	return 0
 
 if __name__ == '__main__':
-	import sys
-	sys.exit(main(sys.argv))
+	main()

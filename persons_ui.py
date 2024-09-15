@@ -9,10 +9,18 @@ import health_ui as hui
 import ethnicity as eth
 
 class Persons(tk.Frame):
-	""" Class doc """
+	""" Persons data tk.frame Class """
 	
 	def __init__ (self, parent):
-		""" Class initialiser """
+		"""
+		Initializes a new instance of the class, setting up the UI components and their respective layouts.
+
+		Parameters:
+			parent (tkinter widget): The parent widget of the current instance.
+
+		Returns:
+			None
+		"""
 		tk.Frame.__init__(self, parent)
 		self.name = save_ui.person_list[0]['first name']
 		self.surname = save_ui.person_list[0]['first surname']
@@ -65,11 +73,7 @@ class Persons(tk.Frame):
 		self.head_household_realtionship_combo['values'] = ['Jefe de hogar','Pareja(Conyuge, Compañer@, Espos@)', 'Hij@', 'Yerno o nuera', 'Padre o madre', 'Padrastro o madrastra','Suegr@','Herman@','Hermanastr@','Cuñad@','Niet@','Abuel@','Otro pariente','Emplead@ del servicio doméstico', 'No pariente']
 		
 		# ~ Grupos etnicos y culturales
-		# Creo que es comveniente hacer una ventana aparte para este tema
-		# sHn - nostalgism
-		# DVYZ - Flood Tide
-		# Pixelated violence - Key Puncher . synthetic
-		# Airglow | memory bank
+		# Creo que es conveniente hacer una ventana aparte para este tema
 		# ----------------------------------------------------- Cultura
 		self.culture_frame = ttk.Labelframe(self, text = 'Cultura')
 		self.culture_frame.pack(padx = 5, pady = 5, fill = tk.X)
@@ -148,27 +152,75 @@ class Persons(tk.Frame):
 		ttk.Button(self, text = 'Siguiente ▶', command = lambda: self.message_data(parent)).pack(fill = tk.X, padx = 10, pady=5)
 		
 	def sons (self):
-		""" Function doc """
+		"""
+		Initializes a new instance of the Sons class.
+
+		Parameters:
+			self (object): A reference to the current instance of the class.
+
+		Returns:
+			None
+		"""
 		sons = Sons()
 		
 	def configure_5_months_back (self):
-		""" Function doc """
+		"""
+		Configures the site settings for the 5 months back period.
+
+		Parameters:
+			None
+
+		Returns:
+			None
+		"""
 		_5_years_back = Site()
 
 	def configure_12_months_back (self):
-		""" Function doc """
+		"""
+		Configures the site settings for the 12 months back period.
+
+		Parameters:
+			None
+
+		Returns:
+			None
+		"""
 		_12_months_back = Site()
 		
 	def configure_born_site (self):
-		""" Function doc """
+		"""
+		Configures the born site settings.
+
+		Parameters:
+			None
+
+		Returns:
+			None
+		"""
 		born_site = Site()
 	
 	def configure_ethnicity (self):
-		""" Function doc """
+		"""
+		Configures the ethnicity settings.
+
+		Parameters:
+			None
+
+		Returns:
+			None
+		"""
 		born = eth.Ethnicity()
 
 	def update (self):
-		""" Function doc """
+		"""
+		Updates the state and configuration of various UI elements based on the value of the `unknow_birth` variable.
+		
+		Parameters:
+			None
+		
+		Returns:
+			None
+		"""
 		if self.unknow_birth.get() == 1:
 			self.born_date.state(['!disabled'])
 		else:
@@ -217,7 +269,15 @@ class Persons(tk.Frame):
 		self.unknow_birth_check.after(1000,self.update)
 		
 	def message_data (self, parent):
-		""" Function doc """
+		"""
+		Generates a message containing the person's data and checks if the information is correct.
+		
+		Parameters:
+			parent (object): The parent object that called this function.
+		
+		Returns:
+			None
+		"""
 		
 		message = f"""
 {self.name} {self.surname} es {'mujer' if self.gender.get() == 1 else 'hombre'}
@@ -247,10 +307,14 @@ Se reconoce asi mismo como: {self.culture_combo.get()}
 				parent.switch_frame(hui.Health)
 
 class Sons(tk.Toplevel):
-	""" Class doc """
+	""" Sons top level Class """
 	
 	def __init__ (self):
-		""" Class initialiser """
+		"""
+		Initializes the sons information frame, including labels, checkboxes, spinboxes, and comboboxes for user input.
+		Sets up the layout and configuration for each widget, including grid positions, sticky options, and padding.
+		No parameters are taken, and no return value is provided.
+		"""
 		super().__init__()
 		
 		self.sons_frame = ttk.LabelFrame(self, text = 'Información de los sons')
@@ -335,7 +399,18 @@ class Sons(tk.Toplevel):
 		self.born_year_spin.grid(row = 13, column = 2, sticky = 'WE', padx = 5)
 		
 	def update (self):
-		""" Function doc """
+		"""
+		Updates the state and configuration of various UI elements based on the current values of other UI elements.
+
+		Enables or disables spinboxes and comboboxes depending on the values of associated checkboxes and spinboxes.
+		Configures the maximum value of certain spinboxes based on the values of other spinboxes.
+
+		Parameters:
+			self: The instance of the class containing this method.
+
+		Returns:
+			None
+		"""
 		self.total_amount_sons_spin['state'] = 'disabled' if self.total_sons.get() == 0 else 'normal'
 		self.total_men_spin['state'] = 'disabled' if self.total_sons.get() == 0 else 'normal'
 		self.total_women_spin['state'] = 'disabled' if self.total_sons.get() == 0 else 'normal'
@@ -362,10 +437,19 @@ class Sons(tk.Toplevel):
 
 
 class Site(tk.Toplevel):
-	""" Class doc """
+	""" Site top level class """
 	
 	def __init__ (self):
-		""" Class initialiser """
+		"""
+		Initializes the object by setting up the UI components, including the site frame, 
+		department, municipality, country, arrival year, locality type, and close button.
+		
+		Parameters:
+			None
+		
+		Returns:
+			None
+		"""
 		super().__init__()
 		self.font = ('Iosevka 10')
 		
@@ -430,16 +514,32 @@ Localidad: {self.locality_type_combo.get()}
 
 
 class Application(tk.Tk):
-	""" Class doc """
 	
 	def __init__ (self):
-		""" Class initialiser """
+		"""
+		Initializes the Tkinter window and sets the title.
+
+		Parameters:
+			None
+
+		Returns:
+			None
+		"""
 		tk.Tk.__init__(self)
 		self.title('Personas')
 		self._frame = Persons(self)
 		self._frame.pack()
 
-def main(args):
+def main():
+	"""
+	Main function of the application, responsible for initializing the UI and adding a test person to the person list.
+	
+	Parameters:
+		None
+	
+	Returns:
+		int: 0 on successful execution
+	"""
 	test_person = {'first name':'Jose', 'second name':'Maria', 'first surname':'Cordoba', 'second surname':'Velasquez'}
 	save_ui.person_list.append(test_person)
 	root = Application()
@@ -447,5 +547,4 @@ def main(args):
 	return 0
 
 if __name__ == '__main__':
-	import sys
-	sys.exit(main(sys.argv))
+	main()

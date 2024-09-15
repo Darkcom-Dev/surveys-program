@@ -16,10 +16,21 @@ import save_ui
 # ====================================================== Classes
 
 class Dashboard(ttk.Frame):
-	""" Class doc """
 	
 	def __init__ (self, parent):
-		""" Class initialiser """
+		"""
+		Class initialiser for the Dashboard class.
+
+		Initialises a new instance of the Dashboard class with the given parent.
+		Sets up the layout of the dashboard with various buttons for different actions.
+
+		Parameters:
+			self: A reference to the current instance of the class.
+			parent: The parent widget of the dashboard.
+
+		Returns:
+			None
+		"""
 		tk.Frame.__init__(self, parent)
 		
 		ttk.Label(self, text = 'Opciones').pack(fill = tk.X)
@@ -31,7 +42,15 @@ class Dashboard(ttk.Frame):
 		ttk.Button(self, text = 'Cargar Divipola', command = self.open_file).pack(fill = tk.X)
 
 	def open_file (self):
-		""" Function doc """
+		"""
+		Opens a file dialog for the user to select a Divipola file.
+
+		Parameters:
+			self: A reference to the current instance of the class.
+
+		Returns:
+			None
+		"""
 		filetypes = (('text files', '*.json'),('All files', '*.*'))
 		filename = fd.askopenfilename(title = 'Abrir divipola', filetypes = filetypes)
 		
@@ -41,10 +60,14 @@ class Dashboard(ttk.Frame):
 		save_ui.load_config()
 
 class Application(tk.Tk):
-	""" Class doc """
 	
 	def __init__ (self):
-		""" Class initialiser """
+		"""
+		Class initialiser for the Application class.
+
+		Initialises the Application class by calling the Tk class constructor and setting the window title.
+		Sets the initial frame to an instance of the Dashboard class and packs it.
+		"""
 		tk.Tk.__init__(self)
 		self.title('Dashboard')
 		self._frame = Dashboard(self)
@@ -52,11 +75,20 @@ class Application(tk.Tk):
 
 # ====================================================== Program Entry
 
-def main(args):
+def main():
+	"""
+	Entry point of the application.
+
+	Parameters:
+		None
+
+	Returns:
+		int: The exit status of the application.
+	"""
+
 	App = Application()
 	App.mainloop()
 	return 0
 
 if __name__ == '__main__':
-	import sys
-	sys.exit(main(sys.argv))
+	main()

@@ -1,3 +1,5 @@
+# TODO: separar todas las clases en ficheros individuales.
+
 # ============================================================ Imports
 
 import tkinter as tk
@@ -13,7 +15,14 @@ class Home(ttk.Frame):
 	""" Graphical interface class dedicated to get home data """
 	
 	def __init__ (self, parent):
-		""" Class initialiser """
+		"""
+		Initializes the class, creating a new frame with various widgets for user input.
+		The frame is divided into two sections: 'Caracteristicas de la vivienda' and 'Personas'.
+		The first section contains questions and input fields for household characteristics, 
+		such as the number of rooms, bedrooms, and kitchen type.
+		The second section contains questions and input fields for the number of people in the household.
+		The function takes a parent widget as a parameter and returns None.
+		"""
 		ttk.Frame.__init__(self, parent)
 		
 		self.font = ('Iosevka 11')
@@ -105,7 +114,15 @@ class Home(ttk.Frame):
 		
 		
 	def update (self):
-		""" Update the interface """
+		"""
+		Updates the interface by configuring the bedrooms spinbox and enabling/disabling the deceased amount button based on the deceased amount spinbox value.
+		
+		Parameters:
+			self (object): The instance of the class.
+		
+		Returns:
+			None
+		"""
 		self.bedrooms_spin.configure(to = self.rooms_spin.get())
 		self.bedrooms_spin.after(1000, self.update)
 		if self.deceased_amount_spin.get() == '0':
@@ -114,7 +131,16 @@ class Home(ttk.Frame):
 			self.deceased_amount_button.state(['!disabled'])
 		
 	def message_data (self, parent):
-		""" Get data and show in the screen """
+		"""
+		Retrieves and validates data from the home interface, then prompts the user to confirm the information.
+		If the data is valid and the user confirms, it saves the data and switches to the goods interface.
+
+		Parameters:
+			parent: The parent frame of the current interface.
+
+		Returns:
+			None
+		"""
 		
 		if self.kitchen_combo.get() == '':
 			message = 'Cocina no tiene una elección válida'
@@ -147,11 +173,27 @@ Personas: {self.deceased_amount_spin.get()}
 				parent.switch_frame(goods_ui.Goods)
 		
 	def deceased (self):
-		""" Function that invoke Deceased window class """
+		"""
+		Invoke the Deceased window class with the current deceased amount.
+
+		Parameters:
+			self (object): The instance of the class.
+
+		Returns:
+			None
+		"""
 		fallen_window = Deceased_window(int(self.deceased_amount_spin.get()))
 
 	def home (self):
-		''' Function that invoke Home window class '''
+		"""
+		Invoke the Home window class with the current persons amount.
+
+		Parameters:
+			self (object): The instance of the class.
+
+		Returns:
+			None
+		"""
 		hogar_window = Home_window(self.persons_amount.get())
 
 class Deceased_window(tk.Toplevel):
@@ -163,7 +205,17 @@ class Deceased_window(tk.Toplevel):
 		pass
 	
 	def __init__ (self, deceased, *args, **kwargs):
-		""" Class initialiser """
+		"""
+		Initialises the Deceased_window class, creating a window to input information about deceased persons.
+		
+		Parameters:
+			deceased (int): The number of deceased persons to input information for.
+			*args: Variable length argument list.
+			**kwargs: Arbitrary keyword arguments.
+		
+		Returns:
+			None
+		"""
 		super().__init__(*args, **kwargs)
 		self.title('Registro de fallecidos.')
 		self.config(width = 300, height = 200)
@@ -209,7 +261,19 @@ class Deceased_window(tk.Toplevel):
 		# ~ self.transient(1)
 	
 	def validate_info (self):
-		""" Function doc """
+		"""
+		Validates the information provided for each deceased person.
+		
+		Checks if the age is not zero and if a valid certificate option is selected.
+		If the information is complete, it creates a list of dictionaries containing the deceased person's data and prints it.
+		The list is then saved to the save_ui.deseased_list variable and the current window is destroyed.
+		
+		Parameters:
+			self: The instance of the class this method belongs to.
+		
+		Returns:
+			None
+		"""
 		
 		deseaseds_list = list()
 		complete = True
@@ -234,7 +298,15 @@ class Home_window(tk.Toplevel):
 	""" Class for secondary float window, this window get complete names of the home members """
 	
 	def __init__ (self, total, *args, **kwargs):
-		""" Class initialiser """
+		"""
+		Initializes the home registration window.
+
+		Parameters:
+			total (int): The total number of persons in the household.
+
+		Returns:
+			None
+		"""
 		super().__init__(*args, **kwargs)
 		self.title('Registro del hogar.')
 		self.config(width = 300, height = 200)
@@ -295,7 +367,11 @@ personas secuestradas, personas en vacaciones fuera del hogar, etc)'''
 		# ~ self.transient(1)
 		
 	def recoger_datos (self):
-		""" Function doc """
+		"""
+		Recoge los datos de las personas ingresadas en la ventana secundaria y los envía a la ventana principal.
+		Verifica que todos los campos obligatorios estén completos antes de cerrar la ventana.
+		No requiere parámetros y no devuelve nada.
+		"""
 		# ~ TODO: Crear una funcion que recoge los datos y los envia a la ventana principal apenas cierre esta ventana
 		# ~ Eliminar la posibilidad de cerrar esta ventana si los datos no estan completos
 		
@@ -324,17 +400,30 @@ personas secuestradas, personas en vacaciones fuera del hogar, etc)'''
 			self.destroy()
 
 class Application(tk.Tk):
-	""" Class doc """
-	
+
 	def __init__ (self):
-		""" Class initialiser """
+		"""
+		Initialises the Application class by calling the Tk class constructor, 
+		creating an instance of the Home class, and packing it into the window.
+		"""
+
 		tk.Tk.__init__(self)
 		self._frame = Home(self)
 		self._frame.pack()
 
 # ====================================================== Program Entry
 
-def main(args):
+def main():
+	"""
+	Program entry point.
+
+	Parameters:
+		None
+
+	Returns:
+		int: Program exit status.
+	"""
+
 	root = Application()
 	root.mainloop()
 	return 0
@@ -344,5 +433,4 @@ def disable_event ():
 	pass
 
 if __name__ == '__main__':
-	import sys
-	sys.exit(main(sys.argv))
+	main()

@@ -13,7 +13,18 @@ class Dwelling_data(ttk.Frame):
 	""" Interface class dedicated to features of the dwelling """
 	
 	def __init__ (self, parent):
-		""" Class initialiser """
+		"""
+		Initializes the class, creating a new frame with various widgets to collect 
+		information about a dwelling's characteristics and services. The frame is 
+		packed with a label frame for dwelling characteristics, a label frame for 
+		services, and a button to proceed to the next step.
+
+		Parameters:
+			parent (tkinter widget): The parent widget of the frame.
+
+		Returns:
+			None
+		"""
 		ttk.Frame.__init__(self, parent)
 		
 		self.font = ('Iosevka 11')
@@ -113,32 +124,87 @@ class Dwelling_data(ttk.Frame):
 		self.garbage_times_spin.after(1000, self.update)
 	
 	def validate_stratum (self):
-		""" Function doc """
+		"""
+		Validates the stratum combo based on the energy status.
+
+		Checks if the energy is 0 and sets the stratum combo to 'Imposible establecer' if true.
+		Also configures the state of the stratum combo to 'disabled' if energy is 0, otherwise 'readonly'.
+
+		Parameters:
+			self (object): The instance of the class.
+
+		Returns:
+			None
+		"""
 		if self.energy.get() == 0:
 			self.stratum_combo.set('Imposible establecer')
 		self.stratum_combo.configure(state = 'disabled' if self.energy.get() == 0 else 'readonly')
 	
 	def validate_toilette(self):
+		"""
+		Validates the toilette combo based on the sewerage status.
+
+		Checks if the sewerage is connected (i.e., self.sewerage.get() == 1) and 
+		sets the toilette combo to 'Inodoro conectado al alcantarillado' if true. 
+		Also configures the state of the toilette combo to 'disabled' if the 
+		sewerage is connected, otherwise sets it to 'readonly'.
+
+		Parameters:
+			None
+
+		Returns:
+			None
+		"""
 		
 		if self.sewerage.get() == 1:
 			self.toilette_combo.set('Inodoro conectado al alcantarillado')
 		self.toilette_combo.configure(state = 'disabled' if self.sewerage.get() == 1 else 'readonly')
 	
 	def validate_garbage_times (self):
-		""" Update graphical interface each one second """
+		"""
+		Updates the graphical interface by validating the garbage times.
+		
+		Checks if the garbage option is disabled (i.e., self.garbage.get() == 0) and 
+		sets the garbage times spinbox to 0 and disables it. Otherwise, it enables 
+		the garbage times spinbox.
+		
+		Parameters:
+			None
+		
+		Returns:
+			None
+		"""
 		if self.garbage.get() == 0:
 			self.garbage_times_spin.delete(0,'end')
 			self.garbage_times_spin.insert(0,0)
 		self.garbage_times_spin.configure(state = tk.DISABLED if self.garbage.get() == 0 else tk.NORMAL)
 	
 	def update (self):
-		""" Function doc """
+		"""
+		Updates the graphical interface by validating the garbage times, stratum, and toilette.
+		
+		Parameters:
+			self (object): The instance of the class.
+		
+		Returns:
+			None
+		"""
 		self.validate_garbage_times()
 		self.validate_stratum()
 		self.validate_toilette()
 	
 	def message_data (self, parent):
-		""" Recoge los datos y los muestra en pantalla """
+		"""
+		Generates a message based on the input data and displays it to the user.
+		The message can be either an error message if any of the required fields are empty,
+		or a confirmation message with the collected data if all fields are filled.
+		
+		Parameters:
+			parent: The parent frame to switch to after saving the data.
+		
+		Returns:
+			None
+		"""
 		
 		if self.dwelling_type_combo.get() == '':
 			message = 'Tipo de vivienda no tiene una elección válida'
@@ -186,21 +252,39 @@ Acueducto: {'NO' if self.aqueduct.get() == 0 else 'SI'}
 
 
 class Application(tk.Tk):
-	""" Class doc """
 	
 	def __init__ (self):
-		""" Class initialiser """
+		"""
+		Class initialiser.
+
+		Initialises the Application class by calling the tk.Tk class initialiser and
+		creating a new instance of the Dwelling_data class as the frame for the application.
+
+		Parameters:
+			self: The instance of the class.
+
+		Returns:
+			None
+		"""
 		tk.Tk.__init__(self)
 		self._frame = Dwelling_data(self)
 		self._frame.pack()
 
 # ====================================================== Program Entry
 
-def main(args):
+def main():
+	"""
+	Runs the main function of the application.
+
+	Parameters:
+		None
+
+	Returns:
+		int: The exit code.
+	"""
 	root = Application()
 	root.mainloop()
 	return 0
 
 if __name__ == '__main__':
-	import sys
-	sys.exit(main(sys.argv))
+	main()

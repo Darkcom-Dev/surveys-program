@@ -17,7 +17,15 @@ class Location(ttk.Frame):
 	""" Class doc """
 	
 	def __init__ (self, parent):
-		""" Class initialiser """
+		"""
+		Initializes the class instance with a parent widget.
+		
+		Parameters:
+			parent (widget): The parent widget of the class instance.
+		
+		Returns:
+			None
+		"""
 		ttk.Frame.__init__(self, parent)
 
 		self.font = ('Iosevka 11')
@@ -110,9 +118,18 @@ class Location(ttk.Frame):
 		self.next_button = ttk.Button(self, text = 'Siguiente', command = lambda: self.message_data(parent)).pack(fill='x', padx = 10, pady = 10)
 		
 	def message_data (self, parent):
-		""" Function doc 
-		
 		"""
+		Generates a message based on the input data and displays it to the user.
+		The message can be either an error message if any of the required fields are empty,
+		or a confirmation message with the collected data if all fields are filled.
+		
+		Parameters:
+			parent: The parent frame to switch to after saving the data.
+		
+		Returns:
+			None
+		"""
+
 		
 		if self.class_combo.get() == '':
 			message = 'La Clase no tiene una elección válida'
@@ -156,26 +173,42 @@ Barrio: {self.neighborhood_combo.get()}
 				parent.switch_frame(igeo.Georeferenciation)
 
 class Application(tk.Tk):
-	""" Class doc """
 	
 	def __init__ (self):
-		""" Class initialiser """
+		"""
+		Class initialiser for Application.
+		
+		Initialises a new Application instance with a title, geometry, and a non-resizable window.
+		Creates a new Location frame and packs it into the application window.
+		
+		Parameters:
+			self (Application): The instance of the Application class.
+		
+		Returns:
+			None
+		"""
 		tk.Tk.__init__(self)
 		
 		self.title('Info Ubicación')
-		self.geometry('400x640+50+50')
 		self.resizable(False, False)
 		
 		self._frame = Location(self)
 		self._frame.pack()
 
-def main(args):
+def main():
+	"""
+	The main function that runs the application.
 
-	# ~ root.attributes('-alpha', 0.5)
+	Parameters:
+		None
+
+	Returns:
+		int: The exit status of the application.
+	"""
+
 	App = Application()
 	App.mainloop()
 	return 0
 
 if __name__ == '__main__':
-	import sys
-	sys.exit(main(sys.argv))
+	main()

@@ -3,6 +3,14 @@
 #
 #  ethnicity.py
 #  
+# ~ 1.1 ¿A cual grupo indigena pertenece?
+# ~ 1.2. ¿A cual clan pertnece?
+		
+# ~ 2.1 ¿A cual vitsa pertenece?
+# ~ 2.2 ¿A cual kumpania pertenece?
+		
+# ~ 38. ¿... Habla la lengua nativa de su pueblo?
+# ~ 38.1 ¿Habla otras lenguas nativas?
 
 import tkinter as tk
 from tkinter import ttk
@@ -10,17 +18,21 @@ import ttk_utils as ttku
 
 class Ethnicity(tk.Toplevel):
 	""" Class that get Ethnicity info of a person """
-		# ~ 1.1 ¿A cual grupo indigena pertenece?
-		# ~ 1.2. ¿A cual clan pertnece?
-		
-		# ~ 2.1 ¿A cual vitsa pertenece?
-		# ~ 2.2 ¿A cual kumpania pertenece?
-		
-		# ~ 38. ¿... Habla la lengua nativa de su pueblo?
-		# ~ 38.1 ¿Habla otras lenguas nativas?
 	
 	def __init__ (self):
-		""" Class initialiser """
+		"""
+		Class initialiser.
+
+		Initialises the Ethnicity class by setting up the necessary UI elements 
+		to collect information about a person's ethnicity, including their 
+		indigenous group, clan, native language, and other languages spoken.
+
+		Parameters:
+			self: The instance of the Ethnicity class.
+
+		Returns:
+			None
+		"""
 		super().__init__()
 		
 		self.ethnicity = 'pueblo indigena','vitsa'
@@ -52,27 +64,51 @@ class Ethnicity(tk.Toplevel):
 		self.close_button = ttk.Button(self, text = 'Cerrar', command = self.update).pack(fill = tk.X, padx = 5, pady = 5)
 		
 	def update (self):
-		""" Function doc """
+		"""
+		Updates the state of the understand language check and amounts spin based on the native language and other languages checkboxes.
 		
+		Triggers the update function to be called again after a 1000ms delay.
+		
+		Parameters:
+			None
+		
+		Returns:
+			None
+		"""
 		self.amounts_spin.after(1000, self.update)
 
 		self.understand_language_check['state'] = tk.NORMAL if self.native_language.get() == 1 else tk.DISABLED
 		self.amounts_spin.state(tk.NORMAL if self.other_languages.get() == 1 else tk.DISABLED)
 
 class Application(tk.Tk):
-	""" Class doc """
 	
 	def __init__ (self):
-		""" Class initialiser """
+		"""
+		Initializes the Ethnicity application by calling the constructor of the tk.Tk class and creating an instance of the Ethnicity class. 
+
+		Parameters:
+		None
+
+		Returns:
+		Nothing
+		"""
 		tk.Tk.__init__(self)
 		self._frame = Ethnicity()
 		# ~ self._frame.pack()
 
-def main(args):
+def main():
+	"""
+	Entry point of the application.
+
+	Parameters:
+		None
+
+	Returns:
+		int: The exit status of the application.
+	"""
 	root = Application()
 	root.mainloop()
 	return 0
 
 if __name__ == '__main__':
-	import sys
-	sys.exit(main(sys.argv))
+	main()

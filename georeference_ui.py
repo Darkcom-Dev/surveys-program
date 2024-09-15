@@ -15,7 +15,18 @@ class Georeferenciation(ttk.Frame):
 	""" Class dedicated to get geolocation of the dwelling """
 	
 	def __init__ (self, parent):
-		""" Class initialiser """
+		"""
+		Initializes the Georeferenciation class.
+
+		Parameters:
+			parent (object): The parent object of the Georeferenciation class.
+
+		Returns:
+			None
+
+		Initializes the Georeferenciation class by setting up the font, creating a labelframe for georeferenciation,
+		adding a button to replace the image, and creating entry fields for latitude and longitude.
+		"""
 		ttk.Frame.__init__(self,parent)
 		self.font = ('Iosevka 11')
 
@@ -50,11 +61,18 @@ class Georeferenciation(ttk.Frame):
 		self.next_button.pack(fill = tk.X, padx = 5, pady = 10)
 	
 	def replace_image (self):
-		""" Funcion que reemplaza la imágen de la vivienda """
+		"""
+		Replaces the current image with a new one.
+		
+		Parameters:
+			self: The instance of the class.
+		
+		Returns:
+			None
+		"""
 		print('Replace Image')
 	
 	def message_data (self, parent):
-		""" Función que recoge los datos y los muestra en pantalla """
 		message = f'''
 Latitud: {self.latitude_entry.get()}
 Longitud: {self.longitude_entry.get()}
@@ -66,22 +84,39 @@ Longitud: {self.longitude_entry.get()}
 			parent.switch_frame(ibv.Dwelling_basic)
 
 class Application(tk.Tk):
-	""" Class doc """
 	
 	def __init__ (self):
-		""" Class initialiser """
+		"""
+		Class initialiser.
+		
+		Initialises the Application class by calling the Tk class initialiser and creating a new Georeferenciation frame.
+		
+		Parameters:
+			self: The instance of the class.
+		
+		Returns:
+			None
+		"""
 		tk.Tk.__init__(self)
 		self._frame = Georeferenciation(self)
 		self._frame.pack()
 
 # ====================================================== Program Entry
 
-def main(args):
+def main():
+	"""
+	The main function is the entry point of the program. It creates an instance of the Application class and starts the main event loop.
+
+	Parameters:
+		None
+
+	Returns:
+		int: The program exit status, which is always 0.
+	"""
+
 	root = Application()
 	root.mainloop()
 	return 0
 
 if __name__ == '__main__':
-	import sys
-	
-	sys.exit(main(sys.argv))
+	main()

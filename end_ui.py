@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 #
 
-
 # ====================================================== Imports
 
 import tkinter as tk
@@ -11,13 +10,18 @@ from tkinter import messagebox
 import ttk_utils as ttku
 # ====================================================== Classes
 
-
-
 class End(ttk.Frame):
-	""" Class doc """
 	
 	def __init__ (self, parent):
-		""" Class initialiser """
+		"""
+		Initialises the End class.
+		
+		Parameters:
+			parent: The parent widget.
+		
+		Returns:
+			None
+		"""
 		tk.Frame.__init__(self, parent)
 		
 		self.password = ttku.LabeledSpinbox(self,'Visita número: ')
@@ -35,10 +39,12 @@ class End(ttk.Frame):
 		
 
 class Application(tk.Tk):
-	""" Class doc """
 	
 	def __init__ (self):
-		""" Class initialiser """
+		"""
+		Initialises the Application class by calling the Tk class constructor, setting the window title, 
+		creating an instance of the End class, and packing it into the window.
+		"""
 		tk.Tk.__init__(self)
 		self.title('End')
 		
@@ -47,11 +53,18 @@ class Application(tk.Tk):
 
 # ====================================================== Program Entry
 
-def main(args):
+def main():
+	"""
+	Program entry point.
+
+	Initializes the Application class and starts the Tkinter event loop.
+	
+	Returns:
+		int: Exit status of the application.
+	"""
 	App = Application()
 	App.mainloop()
 	return 0
 
 if __name__ == '__main__':
-	import sys
-	sys.exit(main(sys.argv))
+	main()

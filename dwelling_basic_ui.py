@@ -17,7 +17,15 @@ class Dwelling_basic(ttk.Frame):
 	and edification use """
 	
 	def __init__ (self, parent):
-		""" Class initialiser and main function"""
+		"""
+		Initializes the Dwelling_basic class, setting up the GUI components for the dwelling information interface.
+		
+		Parameters:
+			parent (object): The parent widget of the Dwelling_basic instance.
+		
+		Returns:
+			None
+		"""
 		ttk.Frame.__init__(self,parent)
 
 		self.normalized_direction = tk.IntVar()
@@ -56,6 +64,20 @@ class Dwelling_basic(ttk.Frame):
 		self.next_button = ttk.Button(self, text = 'Siguiente ▶', command = lambda: self.message_data(parent)).pack(fill= tk.X, padx = 5, pady = 10)
 
 	def validate_edification_use(self):
+		"""
+		Validates the selected edification use and configures the homes amount spinbox accordingly.
+
+		This function checks the value of the edification use combo box and performs different actions based on the selected option.
+		If the selected option is 'Vivienda Desocupada' or 'Uso Comercial', the homes amount spinbox is disabled and set to 0.
+		If the selected option is 'Vivienda Ocupada' or 'Ausente', the homes amount spinbox is enabled.
+		If none of the valid options are selected, a message is printed indicating that an option must be chosen.
+
+		Parameters:
+		None
+
+		Returns:
+		None
+		"""
 		
 		if self.edification_use_combo.get() == 'Vivienda Desocupada' or self.edification_use_combo.get() == 'Uso Comercial':
 			self.homes_amount_spin.delete(0, 'end')
@@ -70,7 +92,15 @@ class Dwelling_basic(ttk.Frame):
 			print('Debe elegir una opción')
 
 	def message_data (self, parent):
-		""" Recoge los datos y los muestra en una ventana """
+		"""
+		Displays a message with the dwelling's basic information and saves it to the database if confirmed.
+
+		Parameters:
+			parent (object): The parent frame that contains the current frame.
+
+		Returns:
+			None
+		"""
 		
 		if self.direction_entry.get() == '':
 			message = 'La direccion no debe estar vacia'
@@ -101,21 +131,36 @@ Uso vivienda: {self.edification_use_combo.get()}
 					parent.switch_frame(dj.Sworn_declaration)
 
 class Application(tk.Tk):
-	""" Class doc """
 	
 	def __init__ (self):
-		""" Class initialiser """
+		"""
+		Class initialiser.
+
+		Initialises the Application class by calling the tk.Tk class initialiser and
+		creating a new instance of the Dwelling_basic class as the frame for the application.
+
+		Parameters:
+			self: The instance of the class.
+
+		Returns:
+			None
+		"""
 		tk.Tk.__init__(self)
 		self._frame = Dwelling_basic(self)
 		self._frame.pack()
 
 # ====================================================== Program Entry
 
-def main(args):
+def main():
+	"""
+	Runs the main function.
+
+	Returns:
+	    int: The exit code.
+	"""
 	root = Application()
 	root.mainloop()
 	return 0
 
 if __name__ == '__main__':
-	import sys
-	sys.exit(main(sys.argv))
+	main()

@@ -8,10 +8,17 @@ import persons_ui
 
 # ============================================================ Classes
 class Goods(tk.Frame):
-	""" Class doc """
 	
 	def __init__ (self, parent):
-		""" Class initialiser """
+		"""
+		Initializes the class, creating a new frame with various widgets to collect user data.
+		
+		Parameters:
+			parent (tkinter widget): The parent widget of this frame.
+		
+		Returns:
+			None
+		"""
 		tk.Frame.__init__(self, parent)
 		
 		self.font = ('Iosevka 10')
@@ -124,7 +131,15 @@ class Goods(tk.Frame):
 		ttk.Button(self, text = 'Siguiente ▶', command = lambda: self.message_data(parent)).pack(fill = tk.X, padx = 10, pady = 10)
 		
 	def message_data (self, parent):
-		""" Function doc """
+		"""
+		Saves information about the goods and expenses of a household.
+		
+		Parameters:
+			parent: The parent frame that called this function.
+		
+		Returns:
+			None
+		"""
 		message = f'''
 Nevera: {'NO' if self.freezer.get() == 0 else 'SI'}
 Lavadora: {'NO' if self.laundry.get() == 0 else 'SI'}
@@ -179,16 +194,35 @@ Hundimiento del terreno: {self.terrain_subsidence_spin.get()}
 				parent.switch_frame(persons_ui.Persons) 
 
 class Application(tk.Tk):
-	""" Class doc """
 	
 	def __init__ (self):
-		""" Class initialiser """
+		"""
+		Class initialiser.
+		
+		Initialises the Application class.
+		
+		Parameters:
+			self (object): The instance of the class containing this method.
+		
+		Returns:
+			None
+		"""
 		tk.Tk.__init__(self)
 		self._frame = Goods(self)
 		self._frame.pack()
 		
 
 	def switch_frame(self, frame_class):
+		"""
+		Switches the current frame to a new one.
+
+		Parameters:
+			self (object): The instance of the class containing this method.
+			frame_class (class): The class of the new frame to switch to.
+
+		Returns:
+			None
+		"""
 		new_frame = frame_class(self)
 		if self._frame is not None:
 			self._frame.destroy()
@@ -197,11 +231,20 @@ class Application(tk.Tk):
 
 # ====================================================== Program Entry
 
-def main(args):
+def main():
+	"""
+	The main function that runs the application.
+
+	Args:
+	    args (list): The command line arguments.
+
+	Returns:
+	    int: The exit code.
+
+	"""
 	root = Application()
 	root.mainloop()
 	return 0
 
 if __name__ == '__main__':
-	import sys
-	sys.exit(main(sys.argv))
+	main()

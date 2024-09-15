@@ -10,7 +10,13 @@ class Profesional(ttk.Frame):
 	""" Class that get educative and professional info """
 	
 	def __init__ (self, parent):
-		""" Class initialiser """
+		"""
+		Initialises the Profesional class, creating a LabelFrame for professional information.
+		Sets up various UI elements, including Checkbuttons, Comboboxes, and Labels, to collect 
+		information about the user's professional and educational background.
+		The function takes a parent parameter, which is the parent widget for the Profesional frame.
+		No return value.
+		"""
 		ttk.Frame.__init__(self, parent)
 		
 		self.profession_frame = ttk.LabelFrame(parent, text = 'Información profesional')
@@ -50,7 +56,19 @@ class Profesional(ttk.Frame):
 		ttk.Button(parent, text = 'Siguiente ▶', command=lambda: self.message_data(parent)).pack(fill = tk.X, padx = 10, pady = 5)
 	
 	def message_data (self, parent):
-		""" Function doc """
+		"""
+		Generates a message based on the input data and displays it to the user.
+		The message contains information about the user's literacy and writing skills,
+		educational assistance, type of institution, grade in institution, and laboral situation.
+		If any of the required fields are empty, an error message is displayed.
+		If the user confirms the information, it is saved to the database and the program proceeds to the next person's information.
+		
+		Parameters:
+			parent (tkinter.Frame): The parent frame to switch to after saving the data.
+		
+		Returns:
+			None
+		"""
 		
 		message = f'''
 Leer y Escribir: {'NO' if self.write.get() == 0 else 'SI'}
@@ -79,7 +97,10 @@ Situacion laboral: {self.laboral_situation_combo.get()}
 					parent.switch_frame(end_ui.End)
 	
 	def update (self):
-		""" Function doc """
+		"""
+		Updates the grade values for the institute type combo based on the selected institute type.
+		Refreshes the grade values every 1000 milliseconds.
+		"""
 		print(f'tipo de instituto: {self.institute_type_combo.get()}')
 		
 		if 'Pre-escolar' == self.institute_type_combo.get():
@@ -105,19 +126,32 @@ Situacion laboral: {self.laboral_situation_combo.get()}
 		
 		
 class Application(tk.Tk):
-	""" Class doc """
 	
 	def __init__ (self):
-		""" Class initialiser """
+		"""
+		Class initialiser.
+		
+		Initialises the Application class by calling the Tk class constructor and setting the initial frame.
+		
+		Parameters:
+		None
+		
+		Returns:
+		None
+		"""
 		tk.Tk.__init__(self)
 		self._frame = Profesional(self)
 		self._frame.pack()
 
-def main(args):
+def main():
+	"""
+	Run the main application loop.
+
+	:return: 0 indicating successful execution.
+	"""
 	root = Application()
 	root.mainloop()
 	return 0
 
 if __name__ == '__main__':
-	import sys
-	sys.exit(main(sys.argv))
+	main()

@@ -9,7 +9,17 @@ class Health(ttk.Frame):
 	""" Class doc """
 	
 	def __init__ (self, parent):
-		""" Class initialiser """
+		"""
+		Initializes the health frame for the survey, containing questions about the user's health, 
+		any illnesses or accidents they've had in the past 30 days, and any difficulties they 
+		experience in their daily life.
+
+		Parameters:
+			parent (tkinter widget): The parent widget to which the health frame will be attached.
+
+		Returns:
+			None
+		"""
 		ttk.Frame.__init__(self, parent)
 		self.illness_30_days_sentence = '''
 ¿En los ultimos 30 dias, tuvo alguna enfermedad, accidente, 
@@ -84,11 +94,26 @@ interactuar con los demas?
 		ttk.Button(parent, text = 'Siguiente ▶', command=lambda: self.message_data(parent)).pack(fill = tk.X, padx = 10, pady = 5) #
 		
 	def configure_handicap (self):
-		""" Function that call the Handicap Class """
+		"""
+		Configure the handicap.
+
+		This function creates an instance of the `Handicap` class.
+
+		Returns:
+			None
+		"""
 		handicap = Handicap()
 		
 	def message_data (self, parent):
-		""" Function doc """
+		"""
+		Generates a message with the user's health data and prompts for confirmation to save it.
+		
+		Parameters:
+			parent (object): The parent frame of the current frame.
+		
+		Returns:
+			None
+		"""
 		message = f'''
 Enfermedad en 30 dias: {'NO' if self.illness_30_days.get() == 0 else 'SI'}
 Tratamiento: {self.treatment_combo.get()}
@@ -118,6 +143,32 @@ Motivo: {self.motive_combo.get()}
 
 	
 	def update(self):
+		"""
+		Update the state of various widgets based on the value of `self.illness_30_days`.
+
+		This function checks the value of `self.illness_30_days` and updates the state of various widgets accordingly. If `self.illness_30_days` is 0, the following actions are performed:
+		- The `self.treatment_combo` widget is set to 'No hizo nada'.
+		- The state of `self.treatment_combo` and `self.treatment_label` is set to 'disabled'.
+		- The `self.attended` variable is set to False.
+		- The state of `self.attended_check` is set to 'disabled'.
+		- The state of `self.attention_quality_label` is set to 'disabled'.
+		- The `self.attention_quality_combo` widget is set to 'N/A'.
+		- The state of `self.attention_quality_combo` is set to 'disabled'.
+
+		If `self.illness_30_days` is not 0, the following actions are performed:
+		- The state of `self.treatment_combo` and `self.treatment_label` is set to '!disabled'.
+		- The state of `self.attended_check` is set to '!disabled'.
+		- The state of `self.attention_quality_label` is set to '!disabled'.
+		- The state of `self.attention_quality_combo` is set to '!disabled'.
+
+		Finally, the `self.illness_30_days_check` widget is configured to call this function again after a 1000ms delay.
+
+		Parameters:
+		None
+
+		Returns:
+		None
+		"""
 		
 		if self.illness_30_days.get() == 0:
 			self.treatment_combo.set('No hizo nada')
@@ -150,7 +201,26 @@ class Handicap(tk.Toplevel):
 	""" Class that get all handicaps data """
 	
 	def __init__ (self):
-		""" Class initialiser """
+		"""
+		Initializes the class by setting up the GUI components for the handicap section.
+		
+		The handicap section includes a label frame with a title, several labels and comboboxes for selecting handicap options,
+		and checkboxes for selecting aid options.
+		
+		The function does not take any parameters and does not return any values.
+		
+		It sets up the following instance variables:
+			- handicap_frame: the label frame for the handicap section
+			- labels: a list of labels for the handicap options
+			- options: a list of options for the handicap comboboxes
+			- handicaps: a list of StringVar variables for the handicap comboboxes
+			- handicap: a StringVar variable for the handicap combobox
+			- handicap_combo: the combobox for selecting the handicap
+			- motive: a StringVar variable for the motive combobox
+			- motive_combo: the combobox for selecting the motive
+			- ayuda_labels: a list of labels for the aid options
+			- ayuda: a list of IntVar variables for the aid checkboxes
+		"""
 		super().__init__()
 		
 		self.handicap_frame = ttk.LabelFrame(self, text = 'Discapacidades')
@@ -195,21 +265,37 @@ class Handicap(tk.Toplevel):
 			
 
 class Application(tk.Tk):
-	""" Class doc """
 	
 	def __init__ (self):
-		""" Class initialiser """
+		"""
+		Initializes the Application class by calling the Tk class constructor and setting the window title.
+		Sets the initial frame to an instance of the Health class and packs it.
+		
+		Parameters:
+		None
+		
+		Returns:
+		None
+		"""
 		tk.Tk.__init__(self)
 		self._frame = Health(self)
 		self.title('Salud')
 		self._frame.pack()
 
-def main(args):
+def main():
+	"""
+	Initializes the application by setting the age and starting the main event loop.
+	
+	Parameters:
+		None
+	
+	Returns:
+		int: The exit status of the application.
+	"""
 	save_ui.age = 11
 	root = Application()
 	root.mainloop()
 	return 0
 
 if __name__ == '__main__':
-	import sys
-	sys.exit(main(sys.argv))
+	main()
