@@ -1,0 +1,104 @@
+root{
+/*Escriba aqui todas las variables*/
+	--bluredColor: rgba(48, 48, 64, .5);
+  --size: 250px; /*Esto parece una variable*/
+  --speed: 50s;
+  --easing: cubic-bezier(0.8, 0.2, 0.2, 0.8);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body{
+  background: linear-gradient(55deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 85%);
+  color: aquamarine;
+  font-family: monospace;
+}
+
+#quiz {
+  text-align: left;
+  background-color: var(--bluredColor);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+}
+
+#resultados {
+  text-align: center;
+  margin-top: 20px;
+}
+
+label {
+  background-color: rgb(48, 48, 48);
+  border-radius: 3px;
+  padding: 3px;
+  color: alicewhite;
+}
+
+label:hover {
+  background-color: rgb(64, 64, 64);
+}
+
+p{
+  color: aliceblue;
+  font-weight: bold;
+}
+
+#countdown {
+  text-align: center;
+  font-size: 60px;
+  margin-top: 0px;
+}
+
+#counter {
+  background-color: var(--bluredColor);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+}
+
+form {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+button {
+  background-color: #4CAF50;
+  border-radius: 15px;
+  color: alicewhite;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.gradient{
+  width: var(--size); /* Asi se usa una variable*/
+  height: var(--size);
+  filter: blur(calc(var(--size) / 10));
+  background-image: linear-gradient(rgba(55, 235, 169, 0.85),rgb(91, 55, 235));
+  
+  animation: rotate var(--speed) var(--easing) alternate infinite;
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  position: fixed;
+  top: 20%;
+  left: 20%;
+  z-index: -10;
+}
+
+@keyframes rotate {
+  0%{
+      transform: rotate(0deg);
+  }
+  100%{
+      transform: rotate(360deg);
+  }
+}
+
+@media (min-width: 720px){
+  .gradient{
+      --size: 500px;
+  }
+}
