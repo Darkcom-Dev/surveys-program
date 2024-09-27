@@ -1,0 +1,23 @@
+# ~ print(self.style.configure('TNotebook').keys())
+		# ~ self.style.configure('TWidget', background = self.bg_general, foreground = self.fg_enabled, font = self.font_general)
+		'''
+		self.style.configure('TLabelframe', background = self.bg_general, foreground = self.fg_enabled, font = self.font_general)
+		self.style.configure('TFrame', background = self.bg_widget, foreground = self.fg_enabled, font = self.font_general)
+		self.style.configure('TLabel', background = self.bg_widget, foreground = self.fg_enabled, font = self.font_general)
+		self.style.configure('TEntry', bg = self.bg_widget, foreground = self.fg_enabled, font = ('G15 12'))
+		self.style.configure('TButton', background = self.bg_widget, foreground = self.fg_enabled, font = 'G15')
+		self.style.configure('TCheckbutton', background = self.bg_widget, foreground = self.fg_enabled, font = self.font_general)
+		self.style.configure('TCombobox', background = self.bg_widget, foreground = self.fg_enabled, font = self.font_general) # Esto modifica la flecha de despliegue
+		self.style.configure('TSpinbox', background = self.bg_widget, foreground = self.fg_enabled, font = self.font_general)
+		self.style.configure('Text', font = self.font_general, background = '#8631E8', foreground = '#5FE888')
+		'''
+
+# ~ self.iconbitmap('@/pythontutorial.xbm')
+		# ~ self.geometry('400x640+50+50')
+		# ~ self.resizable(True, False)
+
+
+		# sHn - nostalgism
+		# DVYZ - Flood Tide
+		# Pixelated violence - Key Puncher . synthetic
+		# Airglow | memory bank

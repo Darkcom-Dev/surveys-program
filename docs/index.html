@@ -4,14 +4,82 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="static/css/style.css">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <title>Surveys Program</title>
 </head>
 <body>
-    <h1>Surveys Program</h1>
-    <p>Es un clon de un aplicativo en Colombia de encuestas del DANE y del Sisben version 4.
-        Este clon está hecho para el aprendizaje de Python, usando Tkinter.
+    <section class="intro">
+        <h1>Surveys Program</h1>
+        <p>Es un clon de un aplicativo en Colombia de encuestas del DANE y del Sisben version 4.
+            Este clon está hecho para el aprendizaje de Python, usando Tkinter.
+            <br>
+            El Dane es el Departamento Nacional de Estadística (DANE) que obtiene la información de la población civil, 
+            y el Sisben es un programa beneficiario de familias pobres (Sisben), para dar subsidios.
+            <br>
+            Ambas organizaciones realizan encuestas, pero la diferencia es la periodicidad, es decir que mientras la encuesta del Dane
+            se hace cada 10 años o menos, segun unos compromisos con la OCDE, esta encuesta mide la riqueza poblacional. mientras que 
+            la encuesta dl Sisben se realiza a pedido por un habitante nuevo que viene a registrarse en la municipalidad con la finalidad
+            de obtener subsidios, por lo que la encuesta tambien mide la riqueza poblacional.
+            <br>
+            Como ambas encuestas son muy similares y ambas se usan para cruzar información, ambas organizaciones cruzan sus bases de datos
+            para encontrar estafadores que se benefician del estado. Debido a esto decidí fusionar en un aplicativo ambas encuestas.
+            <br>
+            Los aplicativos originalmente estaban diseñados en Java para moviles, pero mi conocimiento en Java y en Moviles es nulo,
+            aun asi quiero hacer un clon hecho en web con Django o Flask (aun no he decidido cual enfoque usar).
+            <br>
+            La aplicación es realmente un formulario muy extenso y redundante hecho a propósito para evitar que el encuestador se
+            equivoque con el llenado de la encuesta, con una interfaz de usuario simple y engorrosa para el encuestador, dicha encuesta 
+            podia tomar entre 20 y 40 minutos para ser completada.
+            <br>
+            La encuesta se separa en tres partes, la primera es la información de la vivienda, en esta se toman datos de la estructura fisica,
+            los acabados y los servicios públicos.
+            <br>
+            La segunda parte es la información del hogar, consta de los miembros de la familiar, cual es la relacion entre ellos, cuales
+            son los gastos del hogar y el tiempo de permanencia de la persona en la vivienda.
+            <br>
+            La tercera parte consta de la informacion de cada uno de los miembros del hogar, cual es su salud, educacion, trabajo, etnias.
+            Lo ingresos sea por rentas o por trabajo.
+            <br>
+            El fin ultimo de la encuesta es alimentar una base de datos que posteriormente iba a ser estudiada por las instituciones o esto
+            es lo que decian al encuestador, pero siempre tuve la sospecha que del otro lado ya habia un sistema que leia la informacion y 
+            generaba una calificación pasado el periodo de uno o dos meses.
+            <br>
+            Mi intensión es lograr hacer ambas partes del proyecto, la parte de la alimentación de la base de datos y la parte de la
+            calificación.
+        </p>
+        <a href="https://github.com/Darkcom-Dev/surveys-program">Repositorio de GitHub</a>
+    </section>
+    
+
+    <section class="history">
+        <h2>Historia</h2>
+        <p>Comencé este proyecto en el año 2020, pero mi conocimiento de Python y de Tkinter era pobre para este proyecto, no tenia idea
+            de lo que era una base de datos, por lo que usaba archivos de texto con una sintaxis similar a JSON, no sabia nada de como
+            estructurar los datos, aun asi lo intenté y aunque no logré terminar el proyecto, si logré que fuera medianamente viable.</p>
+            <p>Aunque para el punto al que llegué, logré el objetivo de aprender TKinter a un nivel en el que me podia defender, sentia
+                que el desarrollo de software empezaba a estar obsoleto para el proyecto. pensé que debia al menos poder migrarlo o 
+                poder usar un backend que fuera consumido por una web al tiempo que por una interfaz de usuario.
+            </p>
+            <p>Mi idea con este proyecto siempre fué que fuera un proyecto de aprendizaje para mi portafolio personal. a continuación contaré
+                en que consiste la aplicación mediante la interfaz de TKinter.
+            </p>
+    </section>
+
+    <section class="architecture">
+        <h2>Arquitectura</h2>
+        <p>La encuesta consta de tres partes, la primera es la informacion de la vivienda, la segunda es la informacion del hogar y 
+            la tercera es la informacion de cada miembro del hogar, en teoria son tres mega tablas en la base de datos. pero esto es 
+            poco intuitivo y poco escalable, los problemas se acrecentan cada vez que se hace un cambio en el modelo.
+        <br>
+        En resumen, una ficha está conformada por una vivienda, cada vivienda esta conformada por uno o mas hogares y cada hogar por
+        uno o mas miembros.
+        <br>
+        Volviendo a revisar la aplicación hasta el punto donde lo dejé, la arquitectura es algo similar a esto:
+        <br>
+        <img src="static/img/sisben-surveys-chart-db.svg" alt="database-chart"/>
     </p>
+    </section>
+    
 </body>
 </html>
